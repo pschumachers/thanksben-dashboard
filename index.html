@@ -3879,7 +3879,7 @@ function IntelUploadCard({ account, update, claudeApiKey }) {
       const existingWorkforce = [account.workforceScale, account.hiringShape, account.criticalRoles, account.geoPatterns, account.talentPressure].filter(Boolean).join(" | ");
       const existingProblems = [account.cioProblems, account.chroProblems, account.businessPain, account.whyNow].filter(Boolean).join(" | ");
 
-      const prompt = "You are an elite workforce intelligence analyst specialising in Ben's talent experience platform. You have been given content from Ben's Workforce Intelligence portal or related Ben data about or relevant to \"" + companyName + "\".\n\nEXISTING ACCOUNT INTEL:\n- Industry: " + (account.industry || "unknown") + "\n- Workforce data: " + (existingWorkforce || "none yet") + "\n- Problems identified: " + (existingProblems || "none yet") + "\n\nAnalyse the Ben content below and extract intelligence mapped to these EXACT sections. Use Ben-specific terminology and metrics. Return ONLY valid JSON:\n\n" + JSON.stringify({
+      const prompt = "You are an elite benefits intelligence analyst specialising in Ben's employee benefits platform. You have been given content from Ben's platform or related Ben data about or relevant to \"" + companyName + "\".\n\nEXISTING ACCOUNT INTEL:\n- Industry: " + (account.industry || "unknown") + "\n- Workforce data: " + (existingWorkforce || "none yet") + "\n- Problems identified: " + (existingProblems || "none yet") + "\n\nAnalyse the Ben content below and extract intelligence mapped to these EXACT sections. Use Ben-specific terminology and metrics. Return ONLY valid JSON:\n\n" + JSON.stringify({
         workforceIntelligence: {
           workforceScale: "Workforce & benefits context from Ben data: headcount trends by country/entity, deskless vs desk-based split, benefits-eligible population, engagement and uptake rates, wellbeing indicators",
           hiringShape: "Benefits programme shape from Ben lens: current benefits mix and providers, enrolment and uptake rates, flexibility of allowances, global vs local coverage, admin burden on People teams",
@@ -10323,17 +10323,40 @@ Return this exact JSON structure:
           { style: { flex: 1, minWidth: 0 } },
           /*#__PURE__*/ React.createElement(
             "div",
-            {
-              style: {
-                fontSize: 16,
-                fontWeight: 700,
-                color: C.text,
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
+            { style: { display: "flex", alignItems: "center", gap: 6, minWidth: 0 } },
+            /*#__PURE__*/ React.createElement(
+              "div",
+              {
+                style: {
+                  fontSize: 16,
+                  fontWeight: 700,
+                  color: C.text,
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                },
               },
-            },
-            account.companyName || "Select Account",
+              account.companyName || "Select Account",
+            ),
+            account.companyName && /*#__PURE__*/ React.createElement(
+              "button",
+              {
+                onClick: function () {
+                  var nn = window.prompt("Rename account", account.companyName);
+                  if (nn && nn.trim()) {
+                    var cleaned = nn.trim();
+                    setAccounts(function (prev) {
+                      return prev.map(function (a) {
+                        return a.id === account.id ? { ...a, companyName: cleaned } : a;
+                      });
+                    });
+                  }
+                },
+                title: "Rename account",
+                style: { background: "none", border: "none", cursor: "pointer", fontSize: 13, color: C.muted, padding: "2px 4px", lineHeight: 1, flexShrink: 0 },
+              },
+              "\u270F\uFE0F",
+            ),
           ),
           /*#__PURE__*/ React.createElement(
             "div",
