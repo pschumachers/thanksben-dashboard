@@ -720,12 +720,12 @@ async function exportToPPTX(account) {
     },
     {
       title: 'Reward & Benefits Landscape',
-      body: truncate(`${account.talentPressure || 'Talent challenges'}\n\nWorkforce Scale: ${account.workforceScale || 'N/A'}\n\nCHRO Focus: ${account.chroProblems || 'N/A'}`, 180),
+      body: truncate(`${account.talentPressure || 'Retention & benefits pressure'}\n\nWorkforce Scale: ${account.workforceScale || 'N/A'}\n\nCHRO Focus: ${account.chroProblems || 'N/A'}`, 180),
       tags: ['Reward', 'Retention', 'Wellbeing']
     },
     {
       title: 'Benefits & Enrolment',
-      body: truncate(`Hiring Shape: ${account.hiringShape || 'N/A'}\n\nCritical Roles: ${account.criticalRoles || 'N/A'}\n\nWorkflow: ${account.workflowAssessment || 'N/A'}`, 180),
+      body: truncate(`Benefits Programme: ${account.hiringShape || 'N/A'}\n\nWorkforce Segments: ${account.criticalRoles || 'N/A'}\n\nWorkflow: ${account.workflowAssessment || 'N/A'}`, 180),
       tags: ['Benefits', 'Enrolment', 'Engagement']
     },
     {
@@ -859,7 +859,7 @@ async function exportToPPTX(account) {
     {
       num: 4,
       question: 'Which job families or workflows are tied to that strategy?',
-      body: truncate(`Critical Roles: ${account.criticalRoles || 'N/A'}\n\nHiring Shape: ${account.hiringShape || 'N/A'}\n\nWorkflow: ${account.workflowAssessment || 'N/A'}`, 200),
+      body: truncate(`Workforce Segments: ${account.criticalRoles || 'N/A'}\n\nBenefits Programme: ${account.hiringShape || 'N/A'}\n\nWorkflow: ${account.workflowAssessment || 'N/A'}`, 200),
       tags: ['Roles', 'Hiring', 'Process']
     }
   ];
@@ -2516,9 +2516,9 @@ function buildAccountHTML(account) {
     (account.workforceScale
       ? "<h2>Workforce Intelligence</h2><h3>Scale</h3><p>" + account.workforceScale + "</p>"
       : "") +
-    (account.hiringShape ? "<h3>Hiring Shape</h3><p>" + account.hiringShape + "</p>" : "") +
-    (account.criticalRoles ? "<h3>Critical Roles</h3><p>" + account.criticalRoles + "</p>" : "") +
-    (account.talentPressure ? "<h3>Talent Pressure</h3><p>" + account.talentPressure + "</p>" : "") +
+    (account.hiringShape ? "<h3>Benefits Programme</h3><p>" + account.hiringShape + "</p>" : "") +
+    (account.criticalRoles ? "<h3>Workforce Segments</h3><p>" + account.criticalRoles + "</p>" : "") +
+    (account.talentPressure ? "<h3>Retention &amp; Engagement</h3><p>" + account.talentPressure + "</p>" : "") +
     (execRows
       ? "<h2>Executive Mapping</h2><table><thead><tr><th>Executive</th><th>Priorities</th><th>Outreach Angles</th></tr></thead><tbody>" +
         execRows +
@@ -5576,33 +5576,33 @@ function WorkforceSection({ account, update, claudeApiKey }) {
     [
       [
         "\uD83D\uDCCA",
-        "Workforce Scale & Trajectory",
+        "Workforce Scale & Composition",
         "workforceScale",
-        "Total headcount trend, recent hiring vs. layoffs, headcount by region\u2026",
+        "Total headcount and trajectory, deskless vs desk-based split, benefits-eligible population, growth by region\u2026",
       ],
       [
-        "\uD83D\uDCCB",
-        "Current Hiring Shape",
+        "\uD83C\uDF81",
+        "Benefits Programme & Spend",
         "hiringShape",
         "Benefits budget & spend, enrolment / uptake rates, current benefits providers & HRIS/payroll in use\u2026",
       ],
       [
-        "\u2B50",
-        "Critical Role Families",
+        "\uD83C\uDFAF",
+        "Workforce Segments & Retention Risk",
         "criticalRoles",
-        "Most hard-to-fill roles: actuaries, engineers, sales specialists, etc. Why scarce?",
+        "Which employee segments matter most \u2014 deskless vs desk-based, high-attrition groups, populations a stronger benefits programme would move\u2026",
       ],
       [
         "\uD83C\uDF0D",
-        "Geographic Hiring Patterns",
+        "Geographic Workforce Footprint",
         "geoPatterns",
-        "Where are they hiring most? Remote vs. hybrid vs. onsite policy tensions\u2026",
+        "Countries & entities of operation, deskless-heavy regions, multi-country benefits & compliance needs\u2026",
       ],
       [
         "\uD83D\uDD25",
-        "Talent Pressure & Employer Brand",
+        "Retention, Engagement & Employer Brand",
         "talentPressure",
-        "Glassdoor trends, employer brand strength, competitor poaching, retention issues\u2026",
+        "Glassdoor comp & benefits score, attrition / retention pressure, wellbeing & engagement, employer brand\u2026",
       ],
     ].map(([icon, title, field, placeholder]) =>
       /*#__PURE__*/ React.createElement(
@@ -9335,7 +9335,7 @@ const SUPER_SECTIONS = [
     { id: "revenue", label: "Revenue" },
     { id: "strategy", label: "Strategy" },
   ]},
-  { id: "talent", label: "Workforce & HR", icon: "\uD83D\uDC65", children: [
+  { id: "talent", label: "Workforce & Benefits", icon: "\uD83D\uDC65", children: [
     { id: "workforce", label: "Workforce Intel" },
     { id: "hrtech", label: "HR Tech Stack" },
     { id: "executives", label: "People" },
@@ -9704,11 +9704,11 @@ function ProspectDashboard() {
   "costEfficiency": "Cost reduction programs, efficiency targets",
   "techBets": "Technology stack, digital transformation, AI initiatives",
   "regulatoryContext": "Key regulatory factors affecting the business",
-  "workforceScale": "Employee breakdown by division/region",
-  "hiringShape": "Hiring volume, pace, seasonal patterns",
-  "criticalRoles": "Hardest-to-fill roles and skill gaps",
-  "geoPatterns": "HQ location and key geographic hubs",
-  "talentPressure": "Employer brand strength, retention challenges, talent competition"
+  "workforceScale": "Total headcount and trajectory; split of deskless vs desk-based workers; benefits-eligible population; number of countries and legal entities",
+  "hiringShape": "Current benefits programme and providers; enrolment and uptake rates; flexibility of allowances; admin burden on People teams",
+  "criticalRoles": "Key employee segments and retention risk: deskless vs desk-based populations, high-attrition groups, and the segments a stronger benefits programme would most impact",
+  "geoPatterns": "Countries and entities of operation, deskless-heavy regions, and multi-country benefits and compliance complexity",
+  "talentPressure": "Retention and engagement pressure, Glassdoor compensation-and-benefits score, wellbeing indicators, and employer-brand strength that benefits influence"
 }`;
         const d1p = callClaudeAPI(key, p1, 3000);
 
