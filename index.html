@@ -719,14 +719,14 @@ async function exportToPPTX(account) {
       tags: ['Expansion', 'Market', 'Velocity']
     },
     {
-      title: 'Talent & Workforce',
+      title: 'Reward & Benefits Landscape',
       body: truncate(`${account.talentPressure || 'Talent challenges'}\n\nWorkforce Scale: ${account.workforceScale || 'N/A'}\n\nCHRO Focus: ${account.chroProblems || 'N/A'}`, 180),
-      tags: ['Hiring', 'Retention', 'Growth']
+      tags: ['Reward', 'Retention', 'Wellbeing']
     },
     {
-      title: 'Talent Acquisition',
+      title: 'Benefits & Enrolment',
       body: truncate(`Hiring Shape: ${account.hiringShape || 'N/A'}\n\nCritical Roles: ${account.criticalRoles || 'N/A'}\n\nWorkflow: ${account.workflowAssessment || 'N/A'}`, 180),
-      tags: ['Staffing', 'Process', 'Skills']
+      tags: ['Benefits', 'Enrolment', 'Engagement']
     },
     {
       title: 'Ben Entry Angle',
@@ -984,7 +984,7 @@ async function exportToPPTX(account) {
     {
       title: 'Business Pain',
       body: truncate(account.businessPain || 'Primary business challenge', 150),
-      phenomImpact: 'Addresses core hiring and talent challenges',
+      phenomImpact: 'Addresses core benefits and reward challenges',
       question: 'How are you currently solving this?'
     },
     {
@@ -996,14 +996,14 @@ async function exportToPPTX(account) {
     {
       title: 'Growth Area',
       body: truncate(account.microGrowthArea || 'Key growth opportunity', 150),
-      phenomImpact: 'Talent to scale growth initiatives',
-      question: 'What talent gaps exist?'
+      phenomImpact: 'Benefits to support growth & retention',
+      question: 'What benefits gaps exist?'
     },
     {
       title: 'Geo Impact',
       body: truncate(account.geoConflictImpact || 'Geographic considerations', 150),
-      phenomImpact: 'Localized talent strategies',
-      question: 'Where are hiring challenges concentrated?'
+      phenomImpact: 'Localised global benefits',
+      question: 'Where is benefits complexity concentrated?'
     }
   ];
 
@@ -1460,7 +1460,7 @@ async function exportToPPTX(account) {
   });
 
   // Ben layer
-  slide7.addText('Ben Layer (AI-Driven Screening):', {
+  slide7.addText('Ben Layer (Benefits Experience):', {
     x: 0.5,
     y: 2.25,
     w: 12.33,
@@ -1471,7 +1471,7 @@ async function exportToPPTX(account) {
     fontFace: 'Calibri'
   });
 
-  const phenomSteps = ['Job in Ben', 'Job Matching', 'Smart Apply', 'AI Screening', 'Routing', 'Interview Insights'];
+  const phenomSteps = ['Benefits Setup', 'Personalised Wallet', 'Employee Enrolment', 'Flexible Spend', 'Rewards & Recognition', 'Analytics & Insights'];
   const phenomStepX = [0.7, 1.8, 2.9, 4.0, 5.1, 6.2];
 
   phenomSteps.forEach((step, idx) => {
@@ -1636,7 +1636,7 @@ async function exportToPPTX(account) {
     fontFace: 'Calibri'
   });
 
-  const sources = ['CRM + Talent Pool', 'Career Site + LinkedIn', 'Internal Mobility'];
+  const sources = ['Benefits Marketplace', 'Payroll + HRIS', 'Global Providers'];
   const sourceX = [0.7, 3.5, 6.5];
 
   sources.forEach((source, idx) => {
@@ -2950,7 +2950,7 @@ const emptyAccount = (id, name = "") => ({
       name: "",
       title: "",
       roleType: "Primary Sponsor",
-      department: "HR Leadership",
+      department: "People / HR Leadership",
       background: "",
       priorities: "",
       keyQuote: "",
@@ -2963,7 +2963,7 @@ const emptyAccount = (id, name = "") => ({
       name: "",
       title: "",
       roleType: "Key Influencer",
-      department: "Talent Acquisition",
+      department: "Reward & Benefits",
       background: "",
       priorities: "",
       keyQuote: "",
@@ -2976,7 +2976,7 @@ const emptyAccount = (id, name = "") => ({
       name: "",
       title: "",
       roleType: "Budget Authority",
-      department: "IT / Digital",
+      department: "IT / HRIS",
       background: "",
       priorities: "",
       keyQuote: "",
@@ -3455,7 +3455,7 @@ function IntelUploadCard({ account, update, claudeApiKey }) {
           recentNews: "Recent news or events discussed",
           transformationPrograms: "Transformation initiatives mentioned",
           executives: [{ name: "Person VERIFIED as employee of " + account.companyName, title: "Title", department: "Dept", background: "Context", priorities: "Priorities" }],
-          projectTeam: [{ name: "Person VERIFIED as employee in HR/TA/TM role", role: "HRIS/Talent Acquisition/Talent Management/Workforce Planning/Other", title: "Title", responsibility: "Domain", notes: "Context" }],
+          projectTeam: [{ name: "Person VERIFIED as employee in a Reward/Benefits/People role", role: "Reward & Benefits/People / HR/People Operations/Wellbeing & Engagement/Other", title: "Title", responsibility: "Domain", notes: "Context" }],
           hrTechStack: "ONLY tools explicitly named as used by " + account.companyName + ". Format: [{category: ats/hcm/lms/perf/payroll/wfm/analytics/engagement, name: Tool name, notes: Context}] or empty array",
           keySignals: ["Signal or insight 1 from conversation", "Signal 2", "Signal 3"],
           conversationSummary: "2-3 sentence summary of the key intelligence from this conversation",
@@ -3687,7 +3687,7 @@ function IntelUploadCard({ account, update, claudeApiKey }) {
           whyNowFraming: "Why-now framing based on call context",
           nextSteps: "Action items and next steps agreed on the call",
           executives: [{ name: "Prospect employee who spoke or was mentioned (NOT your team)", title: "Their title at " + account.companyName, department: "Department", background: "What we learned about them on the call", priorities: "Their stated priorities", relevance: "Their role in the deal" }],
-          projectTeam: [{ name: "Prospect employee in HR/TA/TM/WFP role mentioned", role: "HRIS/Talent Acquisition/Talent Management/Workforce Planning/Other", title: "Title", responsibility: "Their domain", notes: "Context from call" }],
+          projectTeam: [{ name: "Prospect employee in a Reward/Benefits/People role mentioned", role: "Reward & Benefits/People / HR/People Operations/Wellbeing & Engagement/Other", title: "Title", responsibility: "Their domain", notes: "Context from call" }],
           hrTechStack: "ONLY tools explicitly named by the prospect as tools THEY use. Format: [{category: ats/hcm/lms/perf/payroll/wfm/analytics/engagement, name: Tool name, notes: Context from call}] or empty array",
           keySignals: ["Buying signal or key insight 1", "Signal 2", "Signal 3"],
           callSummary: "3-4 sentence summary of the call: who was there, what was discussed, key outcomes, and recommended next actions",
@@ -3879,31 +3879,31 @@ function IntelUploadCard({ account, update, claudeApiKey }) {
 
       const prompt = "You are an elite workforce intelligence analyst specialising in Ben's talent experience platform. You have been given content from Ben's Workforce Intelligence portal or related Ben data about or relevant to \"" + companyName + "\".\n\nEXISTING ACCOUNT INTEL:\n- Industry: " + (account.industry || "unknown") + "\n- Workforce data: " + (existingWorkforce || "none yet") + "\n- Problems identified: " + (existingProblems || "none yet") + "\n\nAnalyse the Ben content below and extract intelligence mapped to these EXACT sections. Use Ben-specific terminology and metrics. Return ONLY valid JSON:\n\n" + JSON.stringify({
         workforceIntelligence: {
-          workforceScale: "Workforce scale insights from Ben data: headcount trends, skills gaps identified, workforce readiness scores, AI/automation maturity level, internal mobility rates",
-          hiringShape: "Hiring shape from Ben lens: apply-to-hire ratios, candidate pipeline health, sourcing channel effectiveness, career site conversion, chatbot engagement rates",
+          workforceScale: "Workforce & benefits context from Ben data: headcount trends by country/entity, deskless vs desk-based split, benefits-eligible population, engagement and uptake rates, wellbeing indicators",
+          hiringShape: "Benefits programme shape from Ben lens: current benefits mix and providers, enrolment and uptake rates, flexibility of allowances, global vs local coverage, admin burden on People teams",
           criticalRoles: "Critical roles identified via Ben skills intelligence: hardest-to-fill roles, skills gaps, emerging role families, succession planning gaps, skills adjacencies",
-          geoPatterns: "Geographic hiring patterns from Ben data: regional talent density, remote work patterns, global talent marketplace utilisation, geo-specific skills availability",
+          geoPatterns: "Geographic benefits patterns from Ben data: countries of operation and entities, multi-country compliance needs, deskless-heavy regions, local benefits expectations",
           talentPressure: "Talent pressure indicators: employer brand score, candidate experience benchmarks, competitor talent flows, Glassdoor/Indeed sentiment, internal vs external hire ratios"
         },
         problemIdentification: {
-          cioProblems: "CIO/CTO problems surfaced by Ben analysis: HR tech stack fragmentation, lack of AI-powered talent intelligence, poor system integration, no skills taxonomy, data silos between ATS-HCM-LMS",
-          chroProblems: "CHRO problems from Ben workforce intel: skills gap visibility, low internal mobility (<15% benchmark), poor candidate experience, manual screening bottlenecks, no talent marketplace, workforce planning blind spots",
-          businessPain: "Business-level pain quantified with Ben proof points: cost-per-hire vs industry, time-to-fill vs benchmark (avg 42 days), quality-of-hire gaps, revenue impact of unfilled critical roles, attrition cost",
-          whyNow: "Why-now triggers from Ben intelligence: skills obsolescence acceleration (AI/automation disrupting 40% of roles by 2027), competitor benefits platform adoption, workforce planning gap (18-month lag between strategy and HR execution), regulatory skills requirements"
+          cioProblems: "IT/HRIS problems surfaced by Ben analysis: benefits data spread across payroll, HRIS and point solutions; manual enrolment and eligibility processes; poor integration between payroll and benefits providers; multi-country data compliance gaps",
+          chroProblems: "Reward & People problems from Ben analysis: rising benefits spend with low visibility on ROI, poor benefits engagement and awareness, one-size-fits-all packages, heavy admin burden on People teams, fragmented global benefits, wellbeing and retention pressure",
+          businessPain: "Business-level pain quantified: benefits spend as % of payroll with low utilisation, hours of manual benefits admin per month, attrition cost where benefits are a driver, and lost productivity from low engagement and wellbeing",
+          whyNow: "Why-now triggers: benefits renewal window approaching, international expansion adding new-country benefits needs, rising cost pressure on reward budgets, competitors upgrading to flexible/personalised benefits, and new pay-transparency and benefits regulation"
         },
         useCaseMapping: {
-          workflowAssessment: "Current state vs Ben-enabled state: manual sourcing vs AI matching, reactive hiring vs proactive pipeline, no internal marketplace vs skills-based talent marketplace, basic career site vs personalised talent experience",
+          workflowAssessment: "Current state vs Ben-enabled state: manual enrolment vs self-serve, spreadsheets vs real-time spend dashboards, fragmented point solutions vs one platform, generic packages vs personalised Flexible Spending Allowances",
           highestOpportunity: "Highest-impact Ben use case for this account based on their specific workforce challenges. Map to Ben modules: Intelligent Talent Experience, High-Volume Hiring, Employee Experience, Workforce Intelligence",
-          capabilityMatch: "Ben capability-to-pain mapping: CX (career site AI) -> apply rate; Hiring Manager -> time-to-fill; CRM -> pipeline; Talent Marketplace -> internal mobility; Workforce Intelligence -> skills planning; AI Agents -> screening automation"
+          capabilityMatch: "Ben capability-to-pain mapping: Benefits Experience -> engagement & uptake; Enrolment & Benefits Management -> removes manual admin; Flexible Spending Allowances -> personalisation; Benefits Insights -> spend visibility & compliance; Total Reward Statement -> perceived value; Rewards & Recognition -> retention & morale; Global Benefits -> multi-country consistency"
         },
         businessChallenges: [
-          { severity: "CRITICAL or HIGH or MEDIUM", title: "Challenge title from Ben analysis", businessChallenge: "Specific challenge with Ben workforce data and benchmarks", solution: "Ben solution module and expected outcome with metrics (e.g. 37% increase in internal hires, 50% reduction in time-to-fill, 3x career site conversion)", proofPoint: "Ben customer proof point (e.g. Ben customers average 37% internal hire rate vs 15% industry benchmark)" }
+          { severity: "CRITICAL or HIGH or MEDIUM", title: "Challenge title from Ben analysis", businessChallenge: "Specific challenge with Ben workforce data and benchmarks", solution: "Ben module and expected outcome (e.g. cut manual enrolment admin, lift benefits engagement/uptake, consolidate multi-country benefits onto one platform, real-time spend visibility)", proofPoint: "Ben customer proof point (e.g. Pleo runs 28 benefits across 28 countries with 98% retention; a food manufacturer enrolled 90,000+ deskless workers)" }
         ],
         hyperCell: {
           hyperCellTitle: "Single highest-value Ben opportunity for this account — one sentence",
           hyperCellNarrative: "Executive narrative: why this specific Ben capability is the #1 priority for this account. Reference their specific workforce data, industry benchmarks, and Ben ROI metrics. Include: the business problem, the Ben solution, quantified expected impact, and the urgency driver."
         }
-      }) + "\n\nBEN DATA/CONTENT:\n" + truncated + "\n\nCRITICAL RULES:\n1. Use REAL Ben metrics and benchmarks (e.g. 37% internal hires, 11x internal applications, 50% faster time-to-fill, 3x career site conversions, 62% learning platform increase).\n2. Reference Ben product modules by name: Intelligent Talent Experience, CX (Career Site), Hiring Manager, CRM, Fit Score, Talent Marketplace, Workforce Intelligence, AI Agents.\n3. Map challenges to Ben ROI data: customers see avg 30-50% reduction in TTF, 2-3x improvement in apply rates, 40%+ increase in internal mobility.\n4. If the content doesn't contain company-specific data, use Ben industry benchmarks and frameworks to ENRICH the existing account intel.\n5. For businessChallenges, provide 2-4 challenges. Each must have a Ben-specific solution and proof point.\n6. APPEND to existing intelligence, don't replace. Prefix new insights with '[Ben Intel]' tag.";
+      }) + "\n\nBEN DATA/CONTENT:\n" + truncated + "\n\nCRITICAL RULES:\n1. Use REAL Ben metrics and benchmarks (e.g. 140+ countries supported; Pleo runs 28 benefits across 28 countries with 98% retention; 90,000+ deskless workers enrolled; manual enrolment admin removed).\n2. Reference Ben product modules by name: Benefits Management, Benefits Experience, Benefits Insights, Flexible Spending Allowances, Enrolment & Benefits Management, Rewards & Recognition, Total Reward Statement, Advanced Benefits Communication.\n3. Map challenges to Ben outcomes: less manual benefits admin, higher engagement and uptake, consolidated multi-country benefits, real-time spend and compliance visibility.\n4. If the content doesn't contain company-specific data, use Ben industry benchmarks and frameworks to ENRICH the existing account intel.\n5. For businessChallenges, provide 2-4 challenges. Each must have a Ben-specific solution and proof point.\n6. APPEND to existing intelligence, don't replace. Prefix new insights with '[Ben Intel]' tag.";
 
       const resp = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
@@ -4182,7 +4182,7 @@ function IntelUploadCard({ account, update, claudeApiKey }) {
             { name: "Executive name ONLY if they verifiably work at this company - skip external people", title: "Title at the company", department: "Department", background: "Context confirming employment", priorities: "Priorities" }
           ],
           projectTeam: [
-            { name: "Person name ONLY if verified employee of this company in HRIS/TA/TM/WFP role", role: "One of: HRIS, Talent Acquisition, Talent Management, Workforce Planning, Other", title: "Their title at the company", responsibility: "Their domain", notes: "How verified as employee" }
+            { name: "Person name ONLY if verified employee of this company in a Reward/Benefits/People role", role: "One of: Reward & Benefits, People / HR, People Operations, Wellbeing & Engagement, Other", title: "Their title at the company", responsibility: "Their domain", notes: "How verified as employee" }
           ],
           hrTechStack: "ONLY include HR tools/vendors EXPLICITLY NAMED in the content. Return [] if none mentioned. Format: [{category: ats/hcm/lms/perf/payroll/wfm/analytics/engagement, name: Exact name, notes: Context}]",
         }) + "\n\nWEB CONTENT:\n" + truncated;
@@ -4404,7 +4404,7 @@ function IntelUploadCard({ account, update, claudeApiKey }) {
             { name: "Executive name ONLY if they verifiably work at this company", title: "Title at company", department: "Department", background: "Context confirming employment", priorities: "Priorities" }
           ],
           projectTeam: [
-            { name: "Person name ONLY if verified employee of this company in HRIS/TA/TM/WFP role", role: "One of: HRIS, Talent Acquisition, Talent Management, Workforce Planning, Other", title: "Their title at the company", responsibility: "Their domain", notes: "How verified as employee" }
+            { name: "Person name ONLY if verified employee of this company in a Reward/Benefits/People role", role: "One of: Reward & Benefits, People / HR, People Operations, Wellbeing & Engagement, Other", title: "Their title at the company", responsibility: "Their domain", notes: "How verified as employee" }
           ],
           hrTechStack: "ONLY include HR tools/vendors EXPLICITLY NAMED in the document. Return [] if none mentioned. Format: [{category: ats/hcm/lms/perf/payroll/wfm/analytics/engagement, name: Exact name, notes: Context}]",
         }) + "\n\nDOCUMENT:\n" + truncated;
@@ -4800,7 +4800,7 @@ function IntelUploadCard({ account, update, claudeApiKey }) {
         /*#__PURE__*/ React.createElement("textarea", {
           value: phenomText,
           onChange: (e) => setBenText(e.target.value),
-          placeholder: "Or paste Ben workforce intelligence content here...\n\nTip: Go to workforce-intelligence.phenompro.com, select the relevant company or industry report, copy the content and paste it here. You can also paste Skills Intelligence data, Talent Marketplace reports, or Workforce Readiness assessments.",
+          placeholder: "Or paste Ben benefits/HR intelligence content here...\n\nTip: paste benefits programme details, provider lists, enrolment / uptake data, engagement survey results, or reward strategy notes.",
           disabled: processingBen,
           rows: 5,
           style: { width: "100%", padding: "8px 10px", border: "1px solid " + C.border, borderRadius: 6, background: C.card, color: C.text, fontSize: 11, fontFamily: "inherit", resize: "vertical", outline: "none", boxSizing: "border-box", marginBottom: 8 },
@@ -4814,7 +4814,7 @@ function IntelUploadCard({ account, update, claudeApiKey }) {
         /*#__PURE__*/ React.createElement("div", { style: { marginTop: 8, paddingTop: 8, borderTop: "1px dashed " + C.border } },
           /*#__PURE__*/ React.createElement("div", { style: { fontSize: 10, color: C.muted, marginBottom: 6 } }, "No Ben data to paste? Use AI to enrich sections with Ben frameworks and benchmarks based on your existing account intelligence:"),
           /*#__PURE__*/ React.createElement("button", {
-            onClick: () => processBenContent("Use Ben workforce intelligence frameworks, benchmarks, and product capabilities to enrich the account intelligence for " + (account.companyName || "this company") + " in the " + (account.industry || "unknown") + " industry. Apply Ben-specific metrics: skills intelligence gaps, internal mobility rates (benchmark: 37% internal hires), talent marketplace adoption, AI screening agent impact (50%+ TTF reduction), career site conversion (3x improvement), workforce readiness scoring, and Ben customer proof points. Use industry-specific Ben ROI data and deployment patterns.", "AI-enriched Ben analysis"),
+            onClick: () => processBenContent("Use Ben\u2019s benefits frameworks, benchmarks, and product capabilities to enrich the account intelligence for " + (account.companyName || "this company") + " in the " + (account.industry || "unknown") + " industry. Apply Ben-specific angles: benefits engagement and uptake, enrolment admin reduction, multi-country/global benefits consolidation, flexible-spending personalisation, spend visibility and compliance, and Ben customer proof points (Pleo runs 28 benefits across 28 countries with 98% retention; 90,000+ deskless workers enrolled; 140+ countries supported). Use industry-specific Ben deployment patterns.", "AI-enriched Ben analysis"),
             disabled: processingBen,
             style: { width: "100%", padding: "8px 12px", borderRadius: 6, border: "1px solid #0D9488", cursor: processingBen ? "wait" : "pointer", background: "transparent", color: "#0D9488", fontSize: 11, fontWeight: 600, fontFamily: "inherit" },
           }, processingBen ? "\u23F3 Enriching..." : "\u2728 Auto-Enrich with Ben Frameworks (no paste needed)"),
@@ -5074,7 +5074,7 @@ function ExecutiveBriefSection({ account, update, claudeApiKey }) {
       /*#__PURE__*/ React.createElement(Input, {
         value: account.proofPoint,
         onChange: (v) => update("proofPoint", v),
-        placeholder: "e.g. A leading global insurer achieved 13X apply click improvement\u2026",
+        placeholder: "e.g. Pleo runs 28 benefits across 28 countries on Ben with 98% retention\u2026",
       }),
     ),
   );
@@ -5537,7 +5537,7 @@ function WorkforceSection({ account, update, claudeApiKey }) {
     setEnriching(true); setEnrichStatus("Enriching workforce intelligence with Ben frameworks...");
     try {
       const existing = { workforceScale: account.workforceScale || "", hiringShape: account.hiringShape || "", criticalRoles: account.criticalRoles || "", geoPatterns: account.geoPatterns || "", talentPressure: account.talentPressure || "" };
-      const prompt = "You are a Ben workforce intelligence analyst. For \"" + (account.companyName || "this company") + "\" (industry: " + (account.industry || "unknown") + ", employees: " + (account.employees || "unknown") + "), enrich these workforce fields using Ben's frameworks, benchmarks and public data. EXISTING DATA:\n" + JSON.stringify(existing) + "\n\nReturn ONLY valid JSON with the SAME keys. For each field, APPEND new Ben-sourced insights (prefixed with [Ben Intel]) to the existing text. Use real Ben metrics: skills intelligence gaps, internal mobility benchmarks (37% internal hires), talent marketplace adoption rates, AI readiness scores (83% of orgs have low AI maturity), workforce readiness frameworks, and industry-specific talent data. If existing data is empty, provide fresh Ben-lens analysis.";
+      const prompt = "You are a Ben benefits intelligence analyst. For \"" + (account.companyName || "this company") + "\" (industry: " + (account.industry || "unknown") + ", employees: " + (account.employees || "unknown") + "), enrich these fields using Ben's frameworks, benchmarks and public data. EXISTING DATA:\n" + JSON.stringify(existing) + "\n\nReturn ONLY valid JSON with the SAME keys. For each field, APPEND new Ben-sourced insights (prefixed with [Ben Intel]) to the existing text. Use real Ben angles: benefits engagement and uptake, enrolment admin reduction, global/multi-country benefits consolidation, flexible-spending personalisation, spend visibility and compliance, wellbeing and retention \u2014 and Ben proof points (Pleo 28 benefits across 28 countries, 98% retention; 90,000+ deskless workers enrolled; 140+ countries). If existing data is empty, provide fresh Ben-lens analysis.";
       const resp = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json", "x-api-key": claudeApiKey, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
@@ -5585,7 +5585,7 @@ function WorkforceSection({ account, update, claudeApiKey }) {
         "\uD83D\uDCCB",
         "Current Hiring Shape",
         "hiringShape",
-        "Volume of open roles, hiring velocity, time-to-fill benchmarks, ATS in use\u2026",
+        "Benefits budget & spend, enrolment / uptake rates, current benefits providers & HRIS/payroll in use\u2026",
       ],
       [
         "\u2B50",
@@ -5674,19 +5674,20 @@ function ExecutiveMappingSection({ account, update, claudeApiKey }) {
   };
 
   // --- Project Team ---
-  const TEAM_CATEGORIES = ["HRIS", "Talent Acquisition", "Talent Management", "Workforce Planning", "Other"];
+  const TEAM_CATEGORIES = ["Reward & Benefits", "People / HR", "People Operations", "Wellbeing & Engagement", "IT / HRIS", "Other"];
   const TEAM_CAT_COLORS = {
-    "HRIS": { bg: "#DBEAFE", text: "#2563EB", icon: "\uD83D\uDCBB" },
-    "Talent Acquisition": { bg: "#D1FAE5", text: "#059669", icon: "\uD83D\uDD0D" },
-    "Talent Management": { bg: "#EDE9FE", text: "#7C3AED", icon: "\uD83C\uDFAF" },
-    "Workforce Planning": { bg: "#FEF3C7", text: "#D97706", icon: "\u2699\uFE0F" },
+    "Reward & Benefits": { bg: "#D1FAE5", text: "#059669", icon: "\uD83C\uDF81" },
+    "People / HR": { bg: "#FCE7F3", text: "#DB2777", icon: "\uD83D\uDC65" },
+    "People Operations": { bg: "#DBEAFE", text: "#2563EB", icon: "\u2699\uFE0F" },
+    "Wellbeing & Engagement": { bg: "#FEF3C7", text: "#D97706", icon: "\uD83D\uDC9A" },
+    "IT / HRIS": { bg: "#E0E7FF", text: "#4F46E5", icon: "\uD83D\uDCBB" },
     "Other": { bg: C.bg, text: C.muted, icon: "\uD83D\uDC64" },
   };
   const team = account.projectTeam || [];
 
   const addTeamMember = () => {
     update("projectTeam", [...team, {
-      name: "", role: "Talent Acquisition", title: "", email: "", phone: "", responsibility: "", notes: "", linkedinUrl: "",
+      name: "", role: "Reward & Benefits", title: "", email: "", phone: "", responsibility: "", notes: "", linkedinUrl: "",
     }]);
   };
 
@@ -5741,12 +5742,12 @@ function ExecutiveMappingSection({ account, update, claudeApiKey }) {
     if (!claudeApiKey) { alert("Set your API key first."); return; }
     setDiscoveringTeam(true);
     try {
-      const prompt = "You are a sales intelligence analyst with a 90% ACCURACY MANDATE. Research \"" + account.companyName + "\" (industry: " + (account.industry || "unknown") + ") and find key people responsible for HR/People domains who would evaluate or implement an HR technology platform. Return ONLY valid JSON (no markdown):\n\n" + JSON.stringify({
+      const prompt = "You are a sales intelligence analyst with a 90% ACCURACY MANDATE. Research \"" + account.companyName + "\" (industry: " + (account.industry || "unknown") + ") and find key people responsible for Reward, Benefits and People domains who would evaluate or implement an employee benefits platform. Return ONLY valid JSON (no markdown):\n\n" + JSON.stringify({
         teamMembers: [
-          { name: "Full Name", role: "HRIS", title: "Their exact current title", responsibility: "What they own", notes: "VERIFICATION: [LinkedIn/Xing/company website URL or specific source confirming current employment]", linkedinUrl: "LinkedIn URL if found" },
-          { name: "Full Name", role: "Talent Acquisition", title: "Their exact current title", responsibility: "What they own", notes: "VERIFICATION: [source]", linkedinUrl: "" },
-          { name: "Full Name", role: "Talent Management", title: "Their exact current title", responsibility: "What they own", notes: "VERIFICATION: [source]", linkedinUrl: "" },
-          { name: "Full Name", role: "Workforce Planning", title: "Their exact current title", responsibility: "What they own", notes: "VERIFICATION: [source]", linkedinUrl: "" },
+          { name: "Full Name", role: "Reward & Benefits", title: "Their exact current title", responsibility: "What they own", notes: "VERIFICATION: [LinkedIn/Xing/company website URL or specific source confirming current employment]", linkedinUrl: "LinkedIn URL if found" },
+          { name: "Full Name", role: "People / HR", title: "Their exact current title", responsibility: "What they own", notes: "VERIFICATION: [source]", linkedinUrl: "" },
+          { name: "Full Name", role: "People Operations", title: "Their exact current title", responsibility: "What they own", notes: "VERIFICATION: [source]", linkedinUrl: "" },
+          { name: "Full Name", role: "Wellbeing & Engagement", title: "Their exact current title", responsibility: "What they own", notes: "VERIFICATION: [source]", linkedinUrl: "" },
         ]
       }) + "\n\n90% ACCURACY VERIFICATION PROTOCOL — MANDATORY:\n1. For EACH person, you MUST perform these verification steps BEFORE including them:\n   a) Search: \"{person name}\" site:linkedin.com \"" + account.companyName + "\" — confirm CURRENT role on LinkedIn\n   b) Search: \"{person name}\" site:xing.com \"" + account.companyName + "\" — cross-reference on Xing (for German companies)\n   c) Search: \"" + account.companyName + "\" Vorstand OR leadership OR management team — check official company website\n   d) Search: \"{person name}\" leaves OR departure OR wechselt \"" + account.companyName + "\" — check for exit news\n2. ONLY include a person if you can confirm them through AT LEAST 2 of the above sources.\n3. In the notes field, you MUST state: 'VERIFIED via [source 1] + [source 2]' with specific verification evidence.\n4. If you find ONLY 1 source, prefix their name with '⚠️ ' and note 'SINGLE SOURCE — verify before outreach'.\n5. If you CANNOT verify a person through any source, DO NOT INCLUDE THEM. Zero tolerance for guessing.\n6. Do NOT include people who left in the last 2 years — search for departure news explicitly.\n7. Better to return 1-2 VERIFIED people than 6 guessed names.\n8. Return 2-6 team members maximum. Each MUST have verification evidence in the notes field.";
 
@@ -5781,12 +5782,12 @@ function ExecutiveMappingSection({ account, update, claudeApiKey }) {
   };
 
   const DEPT_COLORS = {
-    "AI Strategy": { bg: "#EDE9FE", text: "#7C3AED", icon: "\uD83E\uDD16" },
-    "Talent Management": { bg: "#DBEAFE", text: "#2563EB", icon: "\uD83C\uDFAF" },
-    "Talent Acquisition": { bg: "#D1FAE5", text: "#059669", icon: "\uD83D\uDD0D" },
-    "Workforce Management": { bg: "#FEF3C7", text: "#D97706", icon: "\u2699\uFE0F" },
-    "HR Leadership": { bg: "#FCE7F3", text: "#DB2777", icon: "\uD83D\uDC65" },
-    "IT / Digital": { bg: "#E0E7FF", text: "#4F46E5", icon: "\uD83D\uDCBB" },
+    "Reward & Benefits": { bg: "#D1FAE5", text: "#059669", icon: "\uD83C\uDF81" },
+    "People / HR Leadership": { bg: "#FCE7F3", text: "#DB2777", icon: "\uD83D\uDC65" },
+    "People Operations": { bg: "#DBEAFE", text: "#2563EB", icon: "\u2699\uFE0F" },
+    "Wellbeing & Engagement": { bg: "#FEF3C7", text: "#D97706", icon: "\uD83D\uDC9A" },
+    "Employee Experience": { bg: "#EDE9FE", text: "#7C3AED", icon: "\u2728" },
+    "IT / HRIS": { bg: "#E0E7FF", text: "#4F46E5", icon: "\uD83D\uDCBB" },
     "Finance": { bg: "#FEE2E2", text: "#DC2626", icon: "\uD83D\uDCB0" },
     "Other": { bg: C.bg, text: C.muted, icon: "\uD83D\uDC64" },
   };
@@ -5834,12 +5835,12 @@ If CONFIRMED still at company, return ONLY valid JSON (no markdown):
 
 {
   "title": "Their exact current title at ${account.companyName}",
-  "department": "One of: AI Strategy, Talent Management, Talent Acquisition, Workforce Management, HR Leadership, IT / Digital, Finance, Other",
+  "department": "One of: Reward & Benefits, People / HR Leadership, People Operations, Wellbeing & Engagement, Employee Experience, IT / HRIS, Finance, Procurement, Other",
   "roleType": "One of: Primary Sponsor, Key Influencer, Budget Authority, Tech Oversight, Compliance Gate, Integration Lead",
   "background": "VERIFIED: [LinkedIn/Xing/company website]. 2-3 sentence career background",
   "priorities": "Their top 3-4 stated priorities or focus areas",
   "keyQuote": "A REAL public quote with source attribution, or empty string. NEVER fabricate.",
-  "relevance": "Why this person matters for an HR/talent technology deal",
+  "relevance": "Why this person matters for an employee benefits deal",
   "outreachAngles": "2 specific outreach angles based on verified priorities",
   "linkedinUrl": "Actual LinkedIn URL (https://linkedin.com/in/...) or empty string",
   "reportsTo": "Name of their direct manager if known, or empty string"
@@ -5893,12 +5894,12 @@ If CONFIRMED still at company, return ONLY valid JSON (no markdown):
 
 {
   "leaders": [
-    {"name": "Full Name", "title": "Exact current title", "department": "AI Strategy", "roleType": "Tech Oversight", "background": "2-3 sentence career background", "priorities": "Their top priorities", "keyQuote": "A real public quote if available, or empty string", "relevance": "Why they matter for an HR/talent technology deal", "outreachAngles": "2 outreach angles", "linkedinUrl": "LinkedIn profile URL if known, or empty string", "reportsTo": "Name of their boss if known"},
-    {"name": "Full Name", "title": "Exact current title", "department": "Talent Management", "roleType": "Key Influencer", "background": "...", "priorities": "...", "keyQuote": "", "relevance": "...", "outreachAngles": "...", "linkedinUrl": "", "reportsTo": ""},
-    {"name": "Full Name", "title": "Exact current title", "department": "Talent Acquisition", "roleType": "Primary Sponsor", "background": "...", "priorities": "...", "keyQuote": "", "relevance": "...", "outreachAngles": "...", "linkedinUrl": "", "reportsTo": ""},
-    {"name": "Full Name", "title": "Exact current title", "department": "Workforce Management", "roleType": "Key Influencer", "background": "...", "priorities": "...", "keyQuote": "", "relevance": "...", "outreachAngles": "...", "linkedinUrl": "", "reportsTo": ""},
-    {"name": "Full Name", "title": "Exact current title", "department": "HR Leadership", "roleType": "Primary Sponsor", "background": "CHRO or CPO background...", "priorities": "...", "keyQuote": "", "relevance": "...", "outreachAngles": "...", "linkedinUrl": "", "reportsTo": "CEO name"},
-    {"name": "Full Name", "title": "Exact current title", "department": "IT / Digital", "roleType": "Tech Oversight", "background": "CIO/CTO background...", "priorities": "...", "keyQuote": "", "relevance": "...", "outreachAngles": "...", "linkedinUrl": "", "reportsTo": "CEO name"}
+    {"name": "Full Name", "title": "Exact current title", "department": "Employee Experience", "roleType": "Tech Oversight", "background": "2-3 sentence career background", "priorities": "Their top priorities", "keyQuote": "A real public quote if available, or empty string", "relevance": "Why they matter for an HR/talent technology deal", "outreachAngles": "2 outreach angles", "linkedinUrl": "LinkedIn profile URL if known, or empty string", "reportsTo": "Name of their boss if known"},
+    {"name": "Full Name", "title": "Exact current title", "department": "People Operations", "roleType": "Key Influencer", "background": "...", "priorities": "...", "keyQuote": "", "relevance": "...", "outreachAngles": "...", "linkedinUrl": "", "reportsTo": ""},
+    {"name": "Full Name", "title": "Exact current title", "department": "Reward & Benefits", "roleType": "Primary Sponsor", "background": "...", "priorities": "...", "keyQuote": "", "relevance": "...", "outreachAngles": "...", "linkedinUrl": "", "reportsTo": ""},
+    {"name": "Full Name", "title": "Exact current title", "department": "Wellbeing & Engagement", "roleType": "Key Influencer", "background": "...", "priorities": "...", "keyQuote": "", "relevance": "...", "outreachAngles": "...", "linkedinUrl": "", "reportsTo": ""},
+    {"name": "Full Name", "title": "Exact current title", "department": "People / HR Leadership", "roleType": "Primary Sponsor", "background": "CHRO or CPO background...", "priorities": "...", "keyQuote": "", "relevance": "...", "outreachAngles": "...", "linkedinUrl": "", "reportsTo": "CEO name"},
+    {"name": "Full Name", "title": "Exact current title", "department": "IT / HRIS", "roleType": "Tech Oversight", "background": "CIO/CTO background...", "priorities": "...", "keyQuote": "", "relevance": "...", "outreachAngles": "...", "linkedinUrl": "", "reportsTo": "CEO name"}
   ]
 }
 
@@ -6112,7 +6113,7 @@ INCLUSION RULES:
       claudeApiKey: claudeApiKey,
       prompt: 'You are a B2B sales researcher. Extract people mentioned in this content who VERIFIABLY WORK AT "' + account.companyName + '". CRITICAL: ONLY include people who the document explicitly identifies as employees/leaders of ' + account.companyName + '. Do NOT include external consultants, vendors, partners, journalists, or anyone who does not work at this organisation. Classify each as either an executive/leader OR a project team member. Return ONLY valid JSON:\n' + JSON.stringify({
         executives: [{ name: "Full name (must be verified employee of the company)", title: "Job title at the company", department: "Department", roleType: "Primary Sponsor / Key Influencer / Budget Authority / Champion", background: "Context from document confirming they work here", priorities: "Their priorities", linkedinUrl: "", reportsTo: "" }],
-        projectTeam: [{ name: "Full name (must be verified employee)", role: "One of: HRIS, Talent Acquisition, Talent Management, Workforce Planning, Other", title: "Job title at the company", responsibility: "Their domain", notes: "Context from doc confirming employment" }],
+        projectTeam: [{ name: "Full name (must be verified employee)", role: "One of: Reward & Benefits, People / HR, People Operations, Wellbeing & Engagement, Other", title: "Job title at the company", responsibility: "Their domain", notes: "Context from doc confirming employment" }],
       }) + '\n\nIMPORTANT: If a person is mentioned but you cannot confirm they work at ' + account.companyName + ', do NOT include them. Return empty arrays if no verified employees found.',
       onResult: handleExecUpload,
     }),
@@ -6161,7 +6162,7 @@ INCLUSION RULES:
         ),
       ),
       showTeamPanel && /*#__PURE__*/ React.createElement("div", null,
-        /*#__PURE__*/ React.createElement("p", { style: { fontSize: 11, color: C.muted, margin: "0 0 10px 0" } }, "Key stakeholders from HRIS, TA, TM, and Workforce Planning who would evaluate or implement a benefits platform."),
+        /*#__PURE__*/ React.createElement("p", { style: { fontSize: 11, color: C.muted, margin: "0 0 10px 0" } }, "Key stakeholders across Reward & Benefits, People / HR, People Operations, and Wellbeing who would evaluate or implement a benefits platform."),
 
         team.length === 0 && /*#__PURE__*/ React.createElement("div", {
           style: { padding: 20, textAlign: "center", border: "2px dashed " + C.border, borderRadius: 10, marginBottom: 10 },
@@ -6263,7 +6264,7 @@ function ProblemIdentificationSection({ account, update, claudeApiKey }) {
     setEnriching(true); setEnrichStatus("Enriching problems with Ben analysis...");
     try {
       const existing = { cioProblems: account.cioProblems || "", chroProblems: account.chroProblems || "", businessPain: account.businessPain || "", whyNow: account.whyNow || "", problemHypothesis: account.problemHypothesis || "" };
-      const prompt = "You are a Ben sales strategist. For \"" + (account.companyName || "this company") + "\" (industry: " + (account.industry || "unknown") + ", employees: " + (account.employees || "unknown") + "), enrich problem identification using Ben intelligence and public data. EXISTING DATA:\n" + JSON.stringify(existing) + "\n\nReturn ONLY valid JSON with same keys. APPEND [Ben Intel] insights. Use Ben proof points: 83% of orgs have low AI/automation maturity, 18-month lag between strategy-HR execution, average TTF 42 days, skills taxonomy gaps, internal mobility below 15% industry average vs Ben 37% benchmark. Surface CIO problems (fragmented HR tech, no AI skills matching), CHRO problems (workforce planning gaps, retention, employer brand), business pain (cost-per-hire, unfilled roles revenue impact), and why-now triggers (AI disruption, skills obsolescence, competitor platform adoption).";
+      const prompt = "You are a Ben sales strategist. For \"" + (account.companyName || "this company") + "\" (industry: " + (account.industry || "unknown") + ", employees: " + (account.employees || "unknown") + "), enrich problem identification using Ben intelligence and public data. EXISTING DATA:\n" + JSON.stringify(existing) + "\n\nReturn ONLY valid JSON with same keys. APPEND [Ben Intel] insights. Use Ben proof points: 140+ countries supported, Pleo runs 28 benefits across 28 countries with 98% retention, 90,000+ deskless workers enrolled, manual enrolment admin removed. Surface IT/HRIS problems (benefits data spread across payroll/HRIS/point solutions, manual eligibility, integration and compliance gaps), Reward/People problems (rising benefits spend with low visibility, poor engagement/uptake, one-size-fits-all packages, admin burden, wellbeing and retention), business pain (benefits spend as % of payroll with low utilisation, admin hours, attrition cost), and why-now triggers (benefits renewal window, international expansion, cost pressure on reward budgets, pay-transparency and benefits regulation).";
       const resp = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json", "x-api-key": claudeApiKey, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
@@ -6311,7 +6312,7 @@ function ProblemIdentificationSection({ account, update, claudeApiKey }) {
         "\uD83D\uDC65",
         "CHRO Likely Problems",
         "chroProblems",
-        "What people & talent problems is the CHRO facing? TTF, employer brand, retention, onboarding complexity\u2026",
+        "What Reward & People problems is the CHRO facing? Benefits cost & complexity, low engagement/uptake, admin burden, retention & wellbeing, global consistency\u2026",
       ],
       [
         "\uD83C\uDFE2",
@@ -6363,7 +6364,7 @@ function UseCaseMappingSection({ account, update, claudeApiKey }) {
     setEnriching(true); setEnrichStatus("Mapping Ben use cases...");
     try {
       const existing = { workflowAssessment: account.workflowAssessment || "", highestOpportunity: account.highestOpportunity || "", capabilityMatch: account.capabilityMatch || "", proofPoints: account.proofPoints || "", personaValueMap: account.personaValueMap || "" };
-      const prompt = "You are a Ben solution architect. For \"" + (account.companyName || "this company") + "\" (industry: " + (account.industry || "unknown") + ", employees: " + (account.employees || "unknown") + "), map Ben use cases. EXISTING DATA:\n" + JSON.stringify(existing) + "\n\nReturn ONLY valid JSON with same keys. APPEND [Ben Intel] insights. Map Ben capabilities: Intelligent Talent Experience (CX career site, chatbot, personalisation), Hiring Manager (interview scheduling, collaboration), CRM (proactive pipeline), Fit Score (AI matching), Talent Marketplace (internal mobility, gigs, mentoring), Workforce Intelligence (skills gaps, succession), AI Agents (screening, sourcing, onboarding). Use proof points: 37% internal hires, 11x internal applications, 50% TTF reduction, 3x career site conversion, 62% learning engagement increase. Map persona value: CHRO (strategic workforce planning), CFO (cost-per-hire reduction, headcount avoidance), CIO (platform consolidation, AI), TA Leader (pipeline, automation), HM (time-to-fill, quality).";
+      const prompt = "You are a Ben solution architect. For \"" + (account.companyName || "this company") + "\" (industry: " + (account.industry || "unknown") + ", employees: " + (account.employees || "unknown") + "), map Ben use cases. EXISTING DATA:\n" + JSON.stringify(existing) + "\n\nReturn ONLY valid JSON with same keys. APPEND [Ben Intel] insights. Map Ben capabilities: Benefits Management (eligibility & policies by market), Benefits Experience (employee app, any device/language, deskless), Benefits Insights (spend, usage & compliance dashboards), Flexible Spending Allowances (personal spending accounts), Enrolment & Benefits Management (self-serve, no manual admin), Rewards & Recognition (instant rewards in messaging tools), Total Reward Statement (all comp in one view), Advanced Benefits Communication (personalised comms). Use proof points: 140+ countries; Pleo 28 benefits across 28 countries with 98% retention; 90,000+ deskless workers enrolled; one platform across multiple countries. Map persona value: CHRO/People (engagement, retention, wellbeing), Reward/Benefits Lead (personalisation, global consistency, admin reduction), CFO/Finance (spend visibility, cost control, ROI), IT/HRIS (payroll & HRIS integration, compliance), Procurement (provider consolidation, governance).";
       const resp = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json", "x-api-key": claudeApiKey, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
@@ -6453,7 +6454,7 @@ function BusinessChallengesSection({ account, update, claudeApiKey }) {
     setEnriching(true); setEnrichStatus("Generating Ben-mapped challenges...");
     try {
       const existingTitles = (account.challenges || []).map(c => c.title || "").join(", ");
-      const prompt = "You are a Ben sales strategist. For \"" + (account.companyName || "this company") + "\" (industry: " + (account.industry || "unknown") + ", employees: " + (account.employees || "unknown") + "), generate 3-4 NEW business challenges with Ben solutions. EXISTING CHALLENGE TITLES (do not duplicate): " + (existingTitles || "none") + "\n\nReturn ONLY valid JSON: { \"challenges\": [{ \"severity\": \"CRITICAL/HIGH/MEDIUM\", \"title\": \"Challenge title\", \"businessChallenge\": \"Specific challenge with data\", \"solution\": \"Ben solution with expected metrics\", \"proofPoint\": \"Ben customer proof point\" }] }\n\nUse Ben ROI data: 37% internal hires, 50% TTF reduction, 3x career site conversion, 11x internal applications, 62% learning engagement, AI agents screening 80%+ of applicants. Map to Ben modules: CX, Hiring Manager, CRM, Talent Marketplace, Workforce Intelligence, AI Agents, Fit Score.";
+      const prompt = "You are a Ben sales strategist. For \"" + (account.companyName || "this company") + "\" (industry: " + (account.industry || "unknown") + ", employees: " + (account.employees || "unknown") + "), generate 3-4 NEW business challenges with Ben solutions. EXISTING CHALLENGE TITLES (do not duplicate): " + (existingTitles || "none") + "\n\nReturn ONLY valid JSON: { \"challenges\": [{ \"severity\": \"CRITICAL/HIGH/MEDIUM\", \"title\": \"Challenge title\", \"businessChallenge\": \"Specific challenge with data\", \"solution\": \"Ben solution with expected metrics\", \"proofPoint\": \"Ben customer proof point\" }] }\n\nUse Ben proof points: 140+ countries, Pleo 28 benefits across 28 countries with 98% retention, 90,000+ deskless workers enrolled, one platform across multiple countries. Map to Ben modules: Benefits Management, Benefits Experience, Benefits Insights, Flexible Spending Allowances, Enrolment & Benefits Management, Rewards & Recognition, Total Reward Statement, Advanced Benefits Communication.";
       const resp = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json", "x-api-key": claudeApiKey, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
@@ -6655,7 +6656,7 @@ function OutcomeFramingSection({ account, update }) {
         "📊",
         "Quantified Impact Estimate",
         "quantifiedImpact",
-        "Revenue impact, cost savings, TTF reduction, headcount avoided. Show your math and flag assumptions to validate in discovery…",
+        "Benefits spend efficiency, admin hours saved, uptake/engagement uplift, retention impact, provider consolidation savings. Show your math and flag assumptions to validate in discovery…",
       ],
       [
         "🎤",
@@ -6703,7 +6704,7 @@ function HyperCellSection({ account, update, claudeApiKey }) {
     setEnriching(true); setEnrichStatus("Identifying Ben hyper-cell opportunity...");
     try {
       const context = { companyName: account.companyName || "", industry: account.industry || "", employees: account.employees || "", workforceScale: safeStr(account.workforceScale).substring(0, 500), criticalRoles: safeStr(account.criticalRoles).substring(0, 300), businessPain: safeStr(account.businessPain).substring(0, 300), whyNow: safeStr(account.whyNow).substring(0, 300), existingTitle: account.hyperCellTitle || "", existingNarrative: safeStr(account.hyperCellNarrative).substring(0, 500) };
-      const prompt = "You are a Ben strategic sales advisor. For \"" + context.companyName + "\", identify THE single highest-value Ben opportunity — the executive-level entry point. CONTEXT:\n" + JSON.stringify(context) + "\n\nReturn ONLY valid JSON:\n{\"hyperCellTitle\": \"One-sentence Ben opportunity title\", \"hyperCellNarrative\": \"3-4 paragraph executive narrative: business context, urgency driver, specific Ben solution (name the module), quantified expected impact (use real Ben proof points), competitive urgency, and the executive ask. This must be compelling enough for a C-suite conversation.\"}\n\nUse real Ben data: 37% internal hires, 50% TTF reduction, 3x career site conversion, 11x internal mobility, AI Agents screening 80%+ candidates, Talent Marketplace reducing external hiring costs 20-30%, Workforce Intelligence enabling skills-based planning 18 months ahead. Reference the specific Ben module that maps to their #1 pain.";
+      const prompt = "You are a Ben strategic sales advisor. For \"" + context.companyName + "\", identify THE single highest-value Ben opportunity — the executive-level entry point. CONTEXT:\n" + JSON.stringify(context) + "\n\nReturn ONLY valid JSON:\n{\"hyperCellTitle\": \"One-sentence Ben opportunity title\", \"hyperCellNarrative\": \"3-4 paragraph executive narrative: business context, urgency driver, specific Ben solution (name the module), quantified expected impact (use real Ben proof points), competitive urgency, and the executive ask. This must be compelling enough for a C-suite conversation.\"}\n\nUse real Ben proof points: 140+ countries supported, Pleo 28 benefits across 28 countries with 98% retention, 90,000+ deskless workers enrolled, one platform consolidating fragmented benefits providers. Reference the specific Ben module (Benefits Management, Benefits Experience, Benefits Insights, Flexible Spending Allowances, Enrolment & Benefits Management, Rewards & Recognition, Total Reward Statement, or Advanced Benefits Communication) that maps to their #1 pain.";
       const resp = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json", "x-api-key": claudeApiKey, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
@@ -6918,13 +6919,26 @@ function GeoPoliSection({ account, update }) {
         value: account.phenomGeoPlay,
         onChange: (v) => update("phenomGeoPlay", v),
         placeholder:
-          "Specific Ben capability \u2192 Geo-driven growth area \u2192 Measurable outcome (e.g. 'AI-powered talent pipeline for hydrogen engineers reduces TTF from 90 to 45 days, enabling RWE to staff 3 offshore wind farms on schedule \u2014 worth \u20AC200M in deployment revenue that would otherwise slip 6-12 months...')",
+          "Specific Ben capability \u2192 Geo-driven benefits need \u2192 Measurable outcome (e.g. 'Global Benefits Administration gives one compliant programme across 6 new countries as the company expands \u2014 cutting local admin and lifting uptake, so reward spend actually reaches employees...')",
         rows: 5,
       }),
     ),
   );
 } // ─── Ben Proof Points Database (Industry-Matched Customer Stories) ─────────
-const BEN_PROOF_POINTS = []; // ─── Industry matching logic ─────────────────────────────────────────────────
+const BEN_PROOF_POINTS = [
+  { company: "Pleo", industry: "Fintech / Technology", headline: "28 benefits across 28 countries on one platform", metrics: ["28 countries", "28 benefits", "98% retention"], source: "thanksben.com/customer-stories", tags: ["Fintech", "Technology", "SaaS", "Software", "Global", "All Industries"] },
+  { company: "Global Bank", industry: "Banking", headline: "Benefits for 200,000+ employees — regulated and white-labelled for SMEs", metrics: ["200,000+ employees", "APAC / EMEA / Americas", "White-label SME"], source: "thanksben.com/customer-stories", tags: ["Banking", "Financial Services", "Insurance", "All Industries"] },
+  { company: "Global Food Manufacturer", industry: "Consumer Goods", headline: "Pension enrolment simplified for 90,000+ deskless workers", metrics: ["90,000+ employees", "UK & Ireland", "Deskless-first"], source: "thanksben.com/customer-stories", tags: ["Consumer Goods", "Manufacturing", "Food", "Retail", "FMCG"] },
+  { company: "Zalando", industry: "E-commerce & Retail", headline: "Culture-aligned benefits employees actually use", metrics: ["Cycle-to-work", "Gym subscriptions", "High engagement"], source: "thanksben.com/customer-stories", tags: ["Retail", "E-commerce", "Fashion", "Consumer"] },
+  { company: "Renewable Energy Company", industry: "Energy & Utilities", headline: "Scaled benefits from one contact centre to the whole enterprise", metrics: ["12,000+ employees", "Multi-division", "Rising engagement"], source: "thanksben.com/customer-stories", tags: ["Energy", "Utilities", "Technology", "Industrial"] },
+  { company: "Construction Group", industry: "Construction", headline: "Mobile-first benefits reached staff across 300+ field sites", metrics: ["4,000+ employees", "300+ locations", "Mobile-first"], source: "thanksben.com/customer-stories", tags: ["Construction", "Field", "Deskless", "Engineering"] },
+  { company: "Global Consulting Firm", industry: "Professional Services", headline: "Lifestyle spending accounts delivered to 40,000+ across sectors", metrics: ["40,000+ users", "LSA + total reward", "Insurance / pharma / finance"], source: "thanksben.com/customer-stories", tags: ["Professional Services", "Financial Services", "Consulting", "Insurance", "Pharma"] },
+  { company: "International Customer Services", industry: "BPO / Outsourcing", headline: "Attrition lowered with wellbeing across four countries", metrics: ["5,000+ employees", "UK / US / South Africa / Australia", "Lower attrition"], source: "thanksben.com/customer-stories", tags: ["BPO", "Outsourcing", "Contact Centre", "Services"] },
+  { company: "Chemical Manufacturer", industry: "Chemicals", headline: "Global standards with local compliance across 6 countries", metrics: ["45,000+ employees", "6 countries", "Local compliance"], source: "thanksben.com/customer-stories", tags: ["Chemicals", "Manufacturing", "Industrial"] },
+  { company: "Fastmarkets", industry: "Information Services", headline: "One platform simplifying benefits across 8 countries", metrics: ["8 countries", "1 platform", "Less admin"], source: "thanksben.com/customer-stories", tags: ["Information", "Technology", "Media", "Data"] },
+  { company: "Sigma Connected", industry: "BPO / Contact Centres", headline: "Named a Best Place to Work two years running", metrics: ["Sunday Times award x2", "Higher engagement"], source: "thanksben.com/customer-stories", tags: ["BPO", "Outsourcing", "Contact Centre"] },
+  { company: "Healios", industry: "Healthcare", headline: "Smooth go-live with responsive implementation support", metrics: ["Fast implementation", "Responsive support"], source: "thanksben.com/customer-stories", tags: ["Healthcare", "Health", "Services"] },
+]; // ─── Industry matching logic ─────────────────────────────────────────────────
 function matchProofPoints(accountIndustry) {
   if (!accountIndustry) return BEN_PROOF_POINTS;
   const terms = accountIndustry
@@ -6977,7 +6991,7 @@ function ProofPointsSection({ account, update }) {
         value: account.proofPoint || "",
         onChange: (v) => update("proofPoint", v),
         placeholder:
-          "Add a custom proof point specific to this account \u2014 e.g. 'A leading global insurer deployed Ben and saw 13X apply click improvement\u2026'",
+          "Add a custom proof point specific to this account \u2014 e.g. 'Pleo runs 28 benefits across 28 countries on Ben with 98% retention\u2026'",
         rows: 3,
       }),
     ),
@@ -7131,18 +7145,18 @@ function ProofPointsSection({ account, update }) {
         /*#__PURE__*/ React.createElement(
           "span",
           { style: { fontWeight: 700, fontSize: 14, color: "#00BFA5" } },
-          "Forrester Total Economic Impact \u2014 Cross-Industry Benchmark",
+          "Ben \u2014 Global Benefits Platform at Scale",
         ),
       ),
       /*#__PURE__*/ React.createElement(
         "div",
         { style: { display: "flex", flexWrap: "wrap", gap: 12 } },
         [
-          { val: "449%", label: "ROI over 3 years" },
-          { val: "<6 mo", label: "Payback period" },
-          { val: "$24M+", label: "Total savings" },
-          { val: "25%", label: "Faster time-to-fill" },
-          { val: "11 hrs", label: "Saved per recruiter/week" },
+          { val: "140+", label: "Countries supported" },
+          { val: "200k+", label: "Employees served" },
+          { val: "98%", label: "Retention (Pleo)" },
+          { val: "90k+", label: "Deskless workers enrolled" },
+          { val: "ISO 27001", label: "Security certified" },
         ].map((m, i) =>
           /*#__PURE__*/ React.createElement(
             "div",
@@ -7488,7 +7502,7 @@ function OutreachSection({ account, update, claudeApiKey = "" }) {
       .replace("{proof_point}", account.proofPoints || account.proofPoint || "")
       .replace("{recent_news}", account.recentNews || "")
       .replace("{priorities}", exec.priorities || "")
-      .replace("{target_area}", "HR Technology and Talent Management");
+      .replace("{target_area}", "Employee Benefits and Reward");
     try {
       const response = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
@@ -8551,9 +8565,9 @@ function BUGrowthBenSection({ account, update, claudeApiKey }) {
 
     // Ben Product Match
     React.createElement("div", { style: { margin: "20px 0 10px", fontSize: 14, fontWeight: 700, color: "#1E293B" } }, "\uD83C\uDFAF Ben Product \u2192 Company Match"),
-    React.createElement(Card, { icon: "\uD83E\uDDE9", title: "Product-to-Need Mapping", color: "#DC2626", field: "phenomProductMatch", tag: "Kill Sheet", placeholder: "[Ben Product] \u2192 [Their specific use case] \u2192 [Expected impact]\nExample: Ben Internal Mobility \u2192 Redeploy 200 displaced workers into growing Cloud BU \u2192 save $4M external hiring", rows: 6 }),
+    React.createElement(Card, { icon: "\uD83E\uDDE9", title: "Product-to-Need Mapping", color: "#DC2626", field: "phenomProductMatch", tag: "Kill Sheet", placeholder: "[Ben Product] \u2192 [Their specific use case] \u2192 [Expected impact]\nExample: Ben Flexible Spending Allowances \u2192 Replace 5 fragmented perk vendors with one personalised wallet \u2192 cut admin and lift uptake", rows: 6 }),
     React.createElement(Card, { icon: "\u23F1\uFE0F", title: "90-Day Quick Wins", color: "#F59E0B", field: "phenomQuickWins", tag: "First Impact", placeholder: "3 concrete deliverables in the first 90 days with specific timelines and metrics...", rows: 4 }),
-    React.createElement(Card, { icon: "\uD83D\uDCB0", title: "12-Month ROI Story", color: "#10B981", field: "phenomROIStory", tag: "Business Case", placeholder: "With [X employees] and [Y open roles], Ben projects: X% time-to-fill reduction ($Y savings)...", rows: 4 }),
+    React.createElement(Card, { icon: "\uD83D\uDCB0", title: "12-Month ROI Story", color: "#10B981", field: "phenomROIStory", tag: "Business Case", placeholder: "With [X employees] across [N countries], Ben projects: fewer admin hours, higher benefits uptake, consolidated provider spend ($Y savings)...", rows: 4 }),
 
     // Wow Insights
     React.createElement("div", { style: { margin: "20px 0 10px", fontSize: 14, fontWeight: 700, color: "#1E293B" } }, "\uD83E\uDD2F \"How Do You Know That?\" Insights"),
@@ -8987,7 +9001,7 @@ function DashboardHome({ accounts, completionScore, selectAccount, setActiveSect
   });
 
   // Department groups for org chart
-  var DEPT_ORDER = ["HR Leadership", "Talent Acquisition", "Talent Management", "Workforce Management", "IT / Digital", "AI Strategy", "Finance", "Procurement", "Other"];
+  var DEPT_ORDER = ["Reward & Benefits", "People / HR Leadership", "People Operations", "Wellbeing & Engagement", "Employee Experience", "IT / HRIS", "Finance", "Procurement", "Other"];
   var deptGroups = {};
   DEPT_ORDER.forEach(function(d) { deptGroups[d] = []; });
   allExecs.forEach(function(e) {
@@ -9006,7 +9020,7 @@ function DashboardHome({ accounts, completionScore, selectAccount, setActiveSect
       (e.roleType || "").toLowerCase().includes(q);
   }).slice(0, 20) : [];
 
-  var deptColor = { "HR Leadership": "#7C3AED", "Talent Acquisition": "#3B82F6", "Talent Management": "#0D9488", "Workforce Management": "#F59E0B", "IT / Digital": "#DC2626", "AI Strategy": "#6366F1", "Finance": "#10B981", "Procurement": "#D97706", "Other": "#6B7280" };
+  var deptColor = { "Reward & Benefits": "#3B82F6", "People / HR Leadership": "#7C3AED", "People Operations": "#0D9488", "Wellbeing & Engagement": "#F59E0B", "Employee Experience": "#6366F1", "IT / HRIS": "#DC2626", "Finance": "#10B981", "Procurement": "#D97706", "Other": "#6B7280" };
 
   // Helper: mini progress ring
   var miniRing = function(score, size) {
@@ -9157,7 +9171,7 @@ function DashboardHome({ accounts, completionScore, selectAccount, setActiveSect
         type: "text",
         value: teamSearch,
         onChange: function(e) { setTeamSearch(e.target.value); setAddToAccountId(null); },
-        placeholder: "Search: e.g. procurement, CHRO, talent, BMW, CIO...",
+        placeholder: "Search: e.g. reward, benefits, CHRO, people ops, finance...",
         style: { width: "100%", padding: "10px 14px", border: "1px solid #D1D5DB", borderRadius: 8, fontSize: 13, fontFamily: "inherit", boxSizing: "border-box", outline: "none", background: "#F9FAFB" },
         onFocus: function(e) { e.target.style.borderColor = "#0D9488"; e.target.style.background = "#fff"; },
         onBlur: function(e) { e.target.style.borderColor = "#D1D5DB"; e.target.style.background = "#F9FAFB"; },
@@ -9705,7 +9719,7 @@ function ProspectDashboard() {
   "hypothesis": "Core sales hypothesis: why this company needs a modern flexible-benefits platform now (2-3 sentences)",
   "cioProblems": "CIO/CTO challenges: current HR tech stack limitations, digital transformation gaps, AI readiness",
   "chroProblems": "CHRO / Reward challenges: benefits cost and complexity, low benefits engagement, global admin burden, retention and wellbeing, personalisation",
-  "businessPain": "Quantified business pain: cost of unfilled roles, productivity loss, revenue impact",
+  "businessPain": "Quantified business pain: rising benefits spend with low utilisation, benefits admin hours, attrition cost where reward is a driver, lost productivity from low engagement",
   "whyNow": "Why is now the right time to engage: trigger events, leadership changes, strategic shifts",
   "problemHypothesis": "Problem hypothesis connecting company challenges to benefits platform solution",
   "workflowAssessment": "Current HR tech stack (ATS, HCM, LMS) and gaps",
@@ -9758,9 +9772,9 @@ INCLUSION RULES:
   "discoveryAngle": "Key discovery angle: what to explore in first meeting",
   "proofPoint": "Most relevant customer case study or proof point",
   "executives": [
-    {"name": "Executive 1 full name (VERIFIED on LinkedIn/Xing)", "title": "Their exact current title", "roleType": "Primary Sponsor", "department": "HR Leadership", "background": "2-3 sentence career background + verification source", "priorities": "Their top priorities", "keyQuote": "A REAL public quote with source — or empty string if none found", "relevance": "Why they matter for this deal", "outreachAngles": "2 outreach angles to engage them", "linkedinUrl": "LinkedIn profile URL (https://linkedin.com/in/...) or empty string", "reportsTo": "Name of their direct manager"},
-    {"name": "Executive 2 full name (VERIFIED)", "title": "Their exact current title", "roleType": "Key Influencer", "department": "Talent Acquisition", "background": "2-3 sentence background + verification", "priorities": "Their top priorities", "keyQuote": "Real quote or empty string", "relevance": "Why they matter", "outreachAngles": "2 outreach angles", "linkedinUrl": "", "reportsTo": ""},
-    {"name": "Executive 3 full name (VERIFIED)", "title": "Their exact current title", "roleType": "Budget Authority", "department": "IT / Digital", "background": "2-3 sentence background + verification", "priorities": "Their top priorities", "keyQuote": "Real quote or empty string", "relevance": "Why they matter", "outreachAngles": "2 outreach angles", "linkedinUrl": "", "reportsTo": ""}
+    {"name": "Executive 1 full name (VERIFIED on LinkedIn/Xing)", "title": "Their exact current title", "roleType": "Primary Sponsor", "department": "People / HR Leadership", "background": "2-3 sentence career background + verification source", "priorities": "Their top priorities", "keyQuote": "A REAL public quote with source — or empty string if none found", "relevance": "Why they matter for this deal", "outreachAngles": "2 outreach angles to engage them", "linkedinUrl": "LinkedIn profile URL (https://linkedin.com/in/...) or empty string", "reportsTo": "Name of their direct manager"},
+    {"name": "Executive 2 full name (VERIFIED)", "title": "Their exact current title", "roleType": "Key Influencer", "department": "Reward & Benefits", "background": "2-3 sentence background + verification", "priorities": "Their top priorities", "keyQuote": "Real quote or empty string", "relevance": "Why they matter", "outreachAngles": "2 outreach angles", "linkedinUrl": "", "reportsTo": ""},
+    {"name": "Executive 3 full name (VERIFIED)", "title": "Their exact current title", "roleType": "Budget Authority", "department": "IT / HRIS", "background": "2-3 sentence background + verification", "priorities": "Their top priorities", "keyQuote": "Real quote or empty string", "relevance": "Why they matter", "outreachAngles": "2 outreach angles", "linkedinUrl": "", "reportsTo": ""}
   ],
   "challenges": [
     {"severity": "CRITICAL", "title": "Challenge title", "businessChallenge": "Description", "solution": "How benefits platform solves it", "proofPoint": "Relevant proof point"},
@@ -9811,7 +9825,7 @@ Return this exact JSON structure:
 {
   "fastestGrowingBU": "Name the SPECIFIC fastest-growing BU at ${acc.companyName} with growth rate, revenue contribution. Must match their actual reported segments above.",
   "buGrowthDrivers": "What drives this BU's growth — cite specific ${new Date().getFullYear()} events, acquisitions, or launches. Connect to the key signals above.",
-  "buTalentNeeds": "Specific roles, volumes, skill sets this BU needs. Reference their actual open roles (${acc.openRoles || "N/A"}) and hiring trends above.",
+  "buTalentNeeds": "Benefits, reward and wellbeing pressures on this BU — headcount growth driving enrolment volume, global/multi-country expansion adding benefits complexity, and retention or engagement gaps a benefits programme could address. Reference their actual employee count and open roles (${acc.openRoles || "N/A"}) above.",
   "phenomProductMatch": "Map 4-5 Ben products to their SPECIFIC challenges listed above: '[Product] → [Their challenge] → [Expected impact with numbers]'",
   "phenomQuickWins": "3 things Ben delivers in FIRST 90 DAYS that directly address the challenges identified above.",
   "phenomROIStory": "12-month ROI using actual numbers: ${acc.employees || "N"} employees, ${acc.openRoles || "N"} open roles. Specific $ amounts.",
