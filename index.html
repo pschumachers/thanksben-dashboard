@@ -4491,7 +4491,7 @@ function ExecutiveBriefSection({ account, update, claudeApiKey }) {
         rows: 2,
       }),
       /*#__PURE__*/ React.createElement(FieldLabel, null, "Proof Point"),
-      /*#__PURE__*/ React.createElement(Input, {
+      /*#__PURE__*/ React.createElement(TextArea, {
         value: account.proofPoint,
         onChange: (v) => update("proofPoint", v),
         placeholder: "e.g. Pleo runs 28 benefits across 28 countries on Ben with 98% retention\u2026",
