@@ -810,12 +810,12 @@ async function exportToPPTX(account) {
     }
   }
 
-  // ========== SLIDE 3: STEPS 1-4 (2x2 GRID) ==========
+  // ========== SLIDE 3: STRATEGIC DIRECTION ==========
   const slide3 = pptx.addSlide();
   slide3.background = { color: 'FFFFFF' };
 
   // Title
-  slide3.addText(account.companyName || 'Company', {
+  slide3.addText('Strategic Direction', {
     x: 0.5,
     y: 0.3,
     w: 12.33,
@@ -826,7 +826,7 @@ async function exportToPPTX(account) {
     fontFace: 'Calibri'
   });
 
-  slide3.addText('Steps 1–4 · Context, growth, structure & workflows', {
+  slide3.addText('What ' + (account.companyName || 'the company') + ' is trying to become, and where it is growing', {
     x: 0.5,
     y: 0.75,
     w: 12.33,
@@ -860,7 +860,7 @@ async function exportToPPTX(account) {
       num: 4,
       question: 'Which job families or workflows are tied to that strategy?',
       body: truncate(`Workforce Segments: ${account.criticalRoles || 'N/A'}\n\nBenefits Programme: ${account.hiringShape || 'N/A'}\n\nWorkflow: ${account.workflowAssessment || 'N/A'}`, 200),
-      tags: ['Roles', 'Hiring', 'Process']
+      tags: ['Benefits', 'Enrolment', 'Process']
     }
   ];
 
@@ -958,7 +958,7 @@ async function exportToPPTX(account) {
   slide4.background = { color: 'FFFFFF' };
 
   // Title
-  slide4.addText(`Where Ben Has Specific, Measurable Impact at ${account.companyName || 'Company'}`, {
+  slide4.addText(`Business Pain at ${account.companyName || 'Company'}`, {
     x: 0.5,
     y: 0.3,
     w: 12.33,
@@ -969,7 +969,7 @@ async function exportToPPTX(account) {
     fontFace: 'Calibri'
   });
 
-  slide4.addText('Key triggers converging now', {
+  slide4.addText('Key pressures converging now', {
     x: 0.5,
     y: 0.85,
     w: 12.33,
@@ -1125,7 +1125,7 @@ async function exportToPPTX(account) {
   slide5.background = { color: 'FFFFFF' };
 
   // Title
-  slide5.addText(`Where Ben Has Specific, Measurable Impact at ${account.companyName || 'Company'}`, {
+  slide5.addText('Where Ben Has Measurable Impact', {
     x: 0.5,
     y: 0.3,
     w: 12.33,
@@ -1136,26 +1136,38 @@ async function exportToPPTX(account) {
     fontFace: 'Calibri'
   });
 
+  // Thesis banner
+  slide5.addShape(pptx.ShapeType.rect, {
+    x: 0.5, y: 0.8, w: 12.33, h: 0.62, fill: { color: brandColor }, line: { type: 'none' }
+  });
+  slide5.addText('Revolut is building a global bank at speed but paying for benefits its people do not use, in markets it cannot efficiently administer.', {
+    x: 0.65, y: 0.8, w: 12.03, h: 0.62, fontSize: 12, bold: true, italic: true, color: 'FFFFFF', align: 'left', valign: 'middle', fontFace: 'Calibri'
+  });
+
+  const dqLines = (typeof account.discoveryQuestions === 'string')
+    ? account.discoveryQuestions.split('\n').map(function (s) { return s.trim(); }).filter(Boolean)
+    : (Array.isArray(account.discoveryQuestions) ? account.discoveryQuestions : []);
+
   const hypotheses = [
     {
       title: account.hyperCellTitle || 'Hypothesis 1',
       evidence: `${account.hyperCellNarrative || 'Key evidence and analysis'}`,
       phenomImpact: account.capabilityMatch || 'Ben solution alignment',
-      question: account.discoveryQuestions ? (typeof account.discoveryQuestions === 'string' ? account.discoveryQuestions : account.discoveryQuestions[0]) : 'Discovery question?'
+      question: dqLines[0] || 'Discovery question?'
     },
     {
       title: account.problemHypothesis || 'Hypothesis 2',
-      evidence: `Secondary hypothesis: ${account.whyNowFraming || 'Framework for consideration'}`,
+      evidence: `${account.whyNowFraming || 'Framework for consideration'}`,
       phenomImpact: account.outcomeStatement || 'Expected outcome and impact',
-      question: account.discoveryQuestions ? (typeof account.discoveryQuestions === 'string' ? '' : (account.discoveryQuestions[1] || 'Second discovery question?')) : 'Second discovery question?'
+      question: dqLines[1] || 'Second discovery question?'
     }
   ];
 
   hypotheses.forEach((hyp, idx) => {
     const hypX = 0.5 + idx * 6.4;
-    const hypY = 1.0;
+    const hypY = 1.5;
     const hypW = 6.2;
-    const hypH = 6.2;
+    const hypH = 5.95;
 
     // Hypothesis card background
     slide5.addShape(pptx.ShapeType.rect, {
@@ -1276,825 +1288,56 @@ async function exportToPPTX(account) {
     });
   });
 
-  // ========== SLIDE 6: WORK ZONES ==========
+  // ========== SLIDE 6: BENEFITS WORKFORCE SEGMENTATION ==========
   const slide6 = pptx.addSlide();
   slide6.background = { color: 'FFFFFF' };
 
-  // Title
-  slide6.addText('Work Zones', {
-    x: 0.5,
-    y: 0.3,
-    w: 12.33,
-    h: 0.4,
-    fontSize: 24,
-    bold: true,
-    color: '1E293B',
-    fontFace: 'Calibri'
+  slide6.addText('Benefits Workforce Segmentation', {
+    x: 0.5, y: 0.3, w: 12.33, h: 0.5, fontSize: 24, bold: true, color: '1E293B', fontFace: 'Calibri'
+  });
+  slide6.addText('One workforce, three populations, three very different benefits needs', {
+    x: 0.5, y: 0.85, w: 12.33, h: 0.3, fontSize: 12, color: '64748B', fontFace: 'Calibri'
   });
 
-  // 5 gradient zones
-  const zones = [
-    { name: 'Zone 1', desc: 'Little to no preparation', roles: 'Entry-level, Frontline', headcount: '~45%', color: 'FF9D5C' },
-    { name: 'Zone 2', desc: 'Moderate preparation', roles: 'Mid-level roles', headcount: '~20%', color: 'FFD700' },
-    { name: 'Zone 3', desc: 'Technical/Specialized', roles: 'Technical Roles', headcount: '~15%', color: 'A855D7' },
-    { name: 'Zone 4', desc: 'Extensive preparation', roles: 'Senior/Specialist', headcount: '~15%', color: '3B82F6' },
-    { name: 'Zone 5', desc: 'Executive/Strategic', roles: 'C-Suite roles', headcount: '~5%', color: '10B981' }
-  ];
-
-  const zoneWidth = (12.33 - 0.5) / zones.length;
-  zones.forEach((zone, idx) => {
-    const zoneX = 0.5 + idx * zoneWidth;
-    const zoneY = 1.0;
-    const zoneH = 6.2;
-
-    // Zone column background with gradient effect
-    slide6.addShape(pptx.ShapeType.rect, {
-      x: zoneX,
-      y: zoneY,
-      w: zoneWidth - 0.05,
-      h: zoneH,
-      fill: { color: zone.color },
-      line: { color: '1E293B', width: 0.5 }
-    });
-
-    // Zone header
-    slide6.addText(zone.name, {
-      x: zoneX + 0.05,
-      y: zoneY + 0.2,
-      w: zoneWidth - 0.15,
-      h: 0.35,
-      fontSize: 12,
-      bold: true,
-      color: 'FFFFFF',
-      align: 'center',
-      fontFace: 'Calibri'
-    });
-
-    // Description
-    slide6.addText(zone.desc, {
-      x: zoneX + 0.05,
-      y: zoneY + 0.65,
-      w: zoneWidth - 0.15,
-      h: 0.6,
-      fontSize: 9,
-      color: 'FFFFFF',
-      align: 'center',
-      valign: 'top',
-      fontFace: 'Calibri'
-    });
-
-    // Roles
-    slide6.addText(zone.roles, {
-      x: zoneX + 0.05,
-      y: zoneY + 1.4,
-      w: zoneWidth - 0.15,
-      h: 1.0,
-      fontSize: 9,
-      bold: true,
-      color: 'FFFFFF',
-      align: 'center',
-      valign: 'top',
-      fontFace: 'Calibri'
-    });
-
-    // Headcount percentage
-    slide6.addText(zone.headcount, {
-      x: zoneX + 0.05,
-      y: zoneY + 2.6,
-      w: zoneWidth - 0.15,
-      h: 0.4,
-      fontSize: 14,
-      bold: true,
-      color: 'FFFFFF',
-      align: 'center',
-      fontFace: 'Calibri'
-    });
-
-    slide6.addText('of headcount', {
-      x: zoneX + 0.05,
-      y: zoneY + 3.0,
-      w: zoneWidth - 0.15,
-      h: 0.3,
-      fontSize: 9,
-      color: 'FFFFFF',
-      align: 'center',
-      fontFace: 'Calibri'
-    });
-  });
-
-  // ========== SLIDE 7: HIRING PROCESS - ZONE 1 (HIGH VOLUME) ==========
-  const slide7 = pptx.addSlide();
-  slide7.background = { color: 'FFFFFF' };
-
-  // Title
-  slide7.addText('Hiring Process — Zone 1', {
-    x: 0.5,
-    y: 0.3,
-    w: 12.33,
-    h: 0.4,
-    fontSize: 24,
-    bold: true,
-    color: '1E293B',
-    fontFace: 'Calibri'
-  });
-
-  slide7.addText('High Volume, Entry-Level Roles', {
-    x: 0.5,
-    y: 0.75,
-    w: 12.33,
-    h: 0.3,
-    fontSize: 12,
-    color: '64748B',
-    fontFace: 'Calibri'
-  });
-
-  // Current ATS layer
-  slide7.addText('Current ATS (Cornerstone/SAP/Oracle):', {
-    x: 0.5,
-    y: 1.15,
-    w: 12.33,
-    h: 0.25,
-    fontSize: 11,
-    bold: true,
-    color: '1E293B',
-    fontFace: 'Calibri'
-  });
-
-  const atsSteps = ['Job Posted', 'Apply', 'Screening', 'Interview', 'Offer', 'Hired'];
-  const atsStepX = [0.7, 1.8, 2.9, 4.0, 5.1, 6.2];
-
-  atsSteps.forEach((step, idx) => {
-    // Step box
-    slide7.addShape(pptx.ShapeType.rect, {
-      x: atsStepX[idx],
-      y: 1.5,
-      w: 0.9,
-      h: 0.5,
-      fill: { color: brandColorLight },
-      line: { color: brandColor, width: 1 }
-    });
-
-    slide7.addText(step, {
-      x: atsStepX[idx],
-      y: 1.5,
-      w: 0.9,
-      h: 0.5,
-      fontSize: 9,
-      color: '1E293B',
-      align: 'center',
-      valign: 'middle',
-      fontFace: 'Calibri'
-    });
-
-    // Arrow to next
-    if (idx < atsSteps.length - 1) {
-      slide7.addShape(pptx.ShapeType.rect, {
-        x: atsStepX[idx] + 1.0,
-        y: 1.7,
-        w: 0.7,
-        h: 0.1,
-        fill: { color: '64748B' },
-        line: { type: 'none' }
-      });
+  const populations = [
+    {
+      title: 'Entry and Frontline',
+      subtitle: 'Operations, support and customer teams',
+      needs: 'Everyday value they can feel, financial wellbeing, health cover, flexible everyday benefits and simple mobile access for a largely deskless population.',
+      benBrings: 'A personalised wallet lifts utilisation among staff who ignore traditional benefits.'
+    },
+    {
+      title: 'Technical',
+      subtitle: 'Engineering and product talent',
+      needs: 'Retention led benefits, learning budgets, wellbeing and lifestyle choice, and equity aware total reward for scarce and mobile talent.',
+      benBrings: 'Choice and personalisation help retain talent that competitors actively pursue.'
+    },
+    {
+      title: 'Specialist',
+      subtitle: 'Finance, risk, legal and compliance',
+      needs: 'Market specific and compliant benefits with clear governance and value for money across many jurisdictions.',
+      benBrings: 'Localised administration and live analytics give reward and finance defensible control.'
     }
-  });
-
-  // Ben layer
-  slide7.addText('Ben Layer (Benefits Experience):', {
-    x: 0.5,
-    y: 2.25,
-    w: 12.33,
-    h: 0.25,
-    fontSize: 11,
-    bold: true,
-    color: '1E293B',
-    fontFace: 'Calibri'
-  });
-
-  const phenomSteps = ['Benefits Setup', 'Personalised Wallet', 'Employee Enrolment', 'Flexible Spend', 'Rewards & Recognition', 'Analytics & Insights'];
-  const phenomStepX = [0.7, 1.8, 2.9, 4.0, 5.1, 6.2];
-
-  phenomSteps.forEach((step, idx) => {
-    // Step box
-    slide7.addShape(pptx.ShapeType.rect, {
-      x: phenomStepX[idx],
-      y: 2.6,
-      w: 0.9,
-      h: 0.5,
-      fill: { color: 'FFEDD5' },
-      line: { color: 'FF9D5C', width: 1 }
-    });
-
-    slide7.addText(step, {
-      x: phenomStepX[idx],
-      y: 2.6,
-      w: 0.9,
-      h: 0.5,
-      fontSize: 9,
-      bold: true,
-      color: 'FF9D5C',
-      align: 'center',
-      valign: 'middle',
-      fontFace: 'Calibri'
-    });
-
-    // Arrow
-    if (idx < phenomSteps.length - 1) {
-      slide7.addShape(pptx.ShapeType.rect, {
-        x: phenomStepX[idx] + 1.0,
-        y: 2.8,
-        w: 0.7,
-        h: 0.1,
-        fill: { color: 'FF9D5C' },
-        line: { type: 'none' }
-      });
-    }
-  });
-
-  // Decision outcomes
-  slide7.addText('AI Screening Results:', {
-    x: 0.5,
-    y: 3.35,
-    w: 12.33,
-    h: 0.25,
-    fontSize: 11,
-    bold: true,
-    color: '1E293B',
-    fontFace: 'Calibri'
-  });
-
-  const outcomes = [
-    { label: 'HIGH SCORE', color: '10B981', path: '→ Interview' },
-    { label: 'MEDIUM SCORE', color: 'FFD700', path: '→ Phone Screen' },
-    { label: 'LOW SCORE', color: 'EF4444', path: '→ Nurture Pool' }
   ];
 
-  outcomes.forEach((outcome, idx) => {
-    const outcomeX = 2.0 + idx * 3.0;
-    slide7.addShape(pptx.ShapeType.rect, {
-      x: outcomeX,
-      y: 3.7,
-      w: 2.5,
-      h: 0.5,
-      fill: { color: outcome.color },
-      line: { color: '1E293B', width: 1 }
-    });
-
-    slide7.addText(`${outcome.label} ${outcome.path}`, {
-      x: outcomeX,
-      y: 3.7,
-      w: 2.5,
-      h: 0.5,
-      fontSize: 10,
-      bold: true,
-      color: 'FFFFFF',
-      align: 'center',
-      valign: 'middle',
-      fontFace: 'Calibri'
-    });
+  const segColW = (12.33 - 0.4) / 3;
+  populations.forEach((pop, idx) => {
+    const px = 0.5 + idx * segColW;
+    const py = 1.4;
+    const ph = 5.4;
+    slide6.addShape(pptx.ShapeType.rect, { x: px, y: py, w: segColW - 0.15, h: ph, fill: { color: 'FFFFFF' }, line: { color: 'E2E8F0', width: 1 }, shadow: cardShadow() });
+    slide6.addShape(pptx.ShapeType.rect, { x: px, y: py, w: segColW - 0.15, h: 0.06, fill: { color: brandColor }, line: { type: 'none' } });
+    slide6.addText(pop.title, { x: px + 0.15, y: py + 0.2, w: segColW - 0.45, h: 0.4, fontSize: 15, bold: true, color: brandColor, fontFace: 'Calibri' });
+    slide6.addText(pop.subtitle, { x: px + 0.15, y: py + 0.65, w: segColW - 0.45, h: 0.35, fontSize: 10, italic: true, color: '64748B', fontFace: 'Calibri' });
+    slide6.addText('Benefits needs', { x: px + 0.15, y: py + 1.15, w: segColW - 0.45, h: 0.25, fontSize: 9, bold: true, color: '1E293B', fontFace: 'Calibri' });
+    slide6.addText(pop.needs, { x: px + 0.15, y: py + 1.45, w: segColW - 0.45, h: 1.9, fontSize: 10, color: '1E293B', align: 'left', valign: 'top', fontFace: 'Calibri' });
+    slide6.addShape(pptx.ShapeType.rect, { x: px + 0.15, y: py + 3.5, w: segColW - 0.45, h: 1.6, fill: { color: brandColorLight }, line: { color: brandColor, width: 1 } });
+    slide6.addText('What Ben brings', { x: px + 0.3, y: py + 3.6, w: segColW - 0.75, h: 0.25, fontSize: 9, bold: true, color: brandColor, fontFace: 'Calibri' });
+    slide6.addText(pop.benBrings, { x: px + 0.3, y: py + 3.9, w: segColW - 0.75, h: 1.1, fontSize: 10, color: '1E293B', align: 'left', valign: 'top', fontFace: 'Calibri' });
   });
 
-  // Metrics at bottom
-  slide7.addText('Automation: Level 3 | Intelligence: Level 2 | Time to Hire: -40% | Quality of Hire: +25%', {
-    x: 0.5,
-    y: 4.5,
-    w: 12.33,
-    h: 0.6,
-    fontSize: 11,
-    bold: true,
-    color: brandColor,
-    align: 'center',
-    fontFace: 'Calibri'
-  });
-
-  // Benefits boxes
-  const benefits = [
-    'Reduces screening time from 2-3 days to 2-3 hours',
-    'Improves first-round interview quality by 35%',
-    'Enables 24/7 candidate engagement & feedback'
-  ];
-
-  benefits.forEach((benefit, idx) => {
-    const benefitX = 0.8 + idx * 4.0;
-    slide7.addShape(pptx.ShapeType.rect, {
-      x: benefitX,
-      y: 5.3,
-      w: 3.6,
-      h: 1.5,
-      fill: { color: 'F0F9FF' },
-      line: { color: brandColor, width: 1 }
-    });
-
-    slide7.addText(benefit, {
-      x: benefitX + 0.15,
-      y: 5.45,
-      w: 3.3,
-      h: 1.2,
-      fontSize: 10,
-      color: '1E293B',
-      align: 'center',
-      valign: 'middle',
-      fontFace: 'Calibri'
-    });
-  });
-
-  // ========== SLIDE 8: HIRING PROCESS - ZONE 3 (TECHNICAL) ==========
-  const slide8 = pptx.addSlide();
-  slide8.background = { color: 'FFFFFF' };
-
-  // Title
-  slide8.addText('Hiring Process — Zone 3', {
-    x: 0.5,
-    y: 0.3,
-    w: 12.33,
-    h: 0.4,
-    fontSize: 24,
-    bold: true,
-    color: '1E293B',
-    fontFace: 'Calibri'
-  });
-
-  slide8.addText('Technical & Mid-to-Senior Roles', {
-    x: 0.5,
-    y: 0.75,
-    w: 12.33,
-    h: 0.3,
-    fontSize: 12,
-    color: '64748B',
-    fontFace: 'Calibri'
-  });
-
-  // Source channels
-  slide8.addText('Source Channels:', {
-    x: 0.5,
-    y: 1.15,
-    w: 12.33,
-    h: 0.25,
-    fontSize: 11,
-    bold: true,
-    color: '1E293B',
-    fontFace: 'Calibri'
-  });
-
-  const sources = ['Benefits Marketplace', 'Payroll + HRIS', 'Global Providers'];
-  const sourceX = [0.7, 3.5, 6.5];
-
-  sources.forEach((source, idx) => {
-    slide8.addShape(pptx.ShapeType.rect, {
-      x: sourceX[idx],
-      y: 1.5,
-      w: 2.3,
-      h: 0.5,
-      fill: { color: 'A855D7' },
-      line: { color: '1E293B', width: 1 }
-    });
-
-    slide8.addText(source, {
-      x: sourceX[idx],
-      y: 1.5,
-      w: 2.3,
-      h: 0.5,
-      fontSize: 10,
-      bold: true,
-      color: 'FFFFFF',
-      align: 'center',
-      valign: 'middle',
-      fontFace: 'Calibri'
-    });
-  });
-
-  // Interview funnel
-  slide8.addText('Interview Process:', {
-    x: 0.5,
-    y: 2.25,
-    w: 12.33,
-    h: 0.25,
-    fontSize: 11,
-    bold: true,
-    color: '1E293B',
-    fontFace: 'Calibri'
-  });
-
-  const interviews = ['Phone Screen', 'Technical Assessment', 'Manager Interview', 'Culture Panel', 'Offer'];
-  let interviewX = 0.7;
-  interviews.forEach((interview, idx) => {
-    const boxWidth = 2.0;
-    slide8.addShape(pptx.ShapeType.rect, {
-      x: interviewX,
-      y: 2.6,
-      w: boxWidth,
-      h: 0.6,
-      fill: { color: 'EDE9FE' },
-      line: { color: 'A855D7', width: 1 }
-    });
-
-    slide8.addText(interview, {
-      x: interviewX,
-      y: 2.65,
-      w: boxWidth,
-      h: 0.5,
-      fontSize: 9,
-      bold: true,
-      color: 'A855D7',
-      align: 'center',
-      valign: 'middle',
-      fontFace: 'Calibri'
-    });
-
-    if (idx < interviews.length - 1) {
-      slide8.addShape(pptx.ShapeType.rect, {
-        x: interviewX + boxWidth + 0.05,
-        y: 2.85,
-        w: 0.35,
-        h: 0.1,
-        fill: { color: '64748B' },
-        line: { type: 'none' }
-      });
-      interviewX += boxWidth + 0.4;
-    } else {
-      interviewX += boxWidth;
-    }
-  });
-
-  // Ben enhancements
-  slide8.addText('Ben Enhancements:', {
-    x: 0.5,
-    y: 3.5,
-    w: 12.33,
-    h: 0.25,
-    fontSize: 11,
-    bold: true,
-    color: '1E293B',
-    fontFace: 'Calabri'
-  });
-
-  const enhancements = [
-    { title: 'Smart Matching', desc: 'AI ranks candidates by skill-fit & cultural alignment' },
-    { title: 'Interview Insights', desc: 'Real-time feedback during interviews with AI notes' },
-    { title: 'Pipeline Nurturing', desc: 'Engage passive candidates over months/years' },
-    { title: 'Offer Analytics', desc: 'Predict acceptance rates and optimize packages' }
-  ];
-
-  enhancements.forEach((enh, idx) => {
-    const enhY = 3.9 + idx * 0.85;
-    slide8.addShape(pptx.ShapeType.rect, {
-      x: 0.7,
-      y: enhY,
-      w: 0.3,
-      h: 0.3,
-      fill: { color: 'A855D7' },
-      line: { type: 'none' }
-    });
-
-    slide8.addText('✓', {
-      x: 0.7,
-      y: enhY,
-      w: 0.3,
-      h: 0.3,
-      fontSize: 16,
-      bold: true,
-      color: 'FFFFFF',
-      align: 'center',
-      valign: 'middle',
-      fontFace: 'Calibri'
-    });
-
-    slide8.addText(enh.title, {
-      x: 1.15,
-      y: enhY,
-      w: 2.0,
-      h: 0.3,
-      fontSize: 10,
-      bold: true,
-      color: '1E293B',
-      align: 'left',
-      valign: 'middle',
-      fontFace: 'Calibri'
-    });
-
-    slide8.addText(enh.desc, {
-      x: 3.3,
-      y: enhY,
-      w: 9.0,
-      h: 0.3,
-      fontSize: 9,
-      color: '64748B',
-      align: 'left',
-      valign: 'middle',
-      fontFace: 'Calibri'
-    });
-  });
-
-  // ========== SLIDE 9: HIRING PROCESS - ZONE 4 (SPECIALIST) ==========
-  const slide9 = pptx.addSlide();
-  slide9.background = { color: 'FFFFFF' };
-
-  // Title
-  slide9.addText('Hiring Process — Zone 4', {
-    x: 0.5,
-    y: 0.3,
-    w: 12.33,
-    h: 0.4,
-    fontSize: 24,
-    bold: true,
-    color: '1E293B',
-    fontFace: 'Calibri'
-  });
-
-  slide9.addText('Specialist & Hard-to-Fill Roles', {
-    x: 0.5,
-    y: 0.75,
-    w: 12.33,
-    h: 0.3,
-    fontSize: 12,
-    color: '64748B',
-    fontFace: 'Calibri'
-  });
-
-  // Sourcing approach
-  slide9.addText('Sourcing Approach:', {
-    x: 0.5,
-    y: 1.15,
-    w: 12.33,
-    h: 0.25,
-    fontSize: 11,
-    bold: true,
-    color: '1E293B',
-    fontFace: 'Calibri'
-  });
-
-  const zone4Sources = ['CRM + Talent Pool Sourcing', 'Executive Recruiter Collaboration', 'Industry Community Partnerships'];
-  const zone4SourceX = [0.7, 4.0, 7.8];
-
-  zone4Sources.forEach((source, idx) => {
-    slide9.addShape(pptx.ShapeType.rect, {
-      x: zone4SourceX[idx],
-      y: 1.5,
-      w: 2.9,
-      h: 0.5,
-      fill: { color: '3B82F6' },
-      line: { color: '1E293B', width: 1 }
-    });
-
-    slide9.addText(source, {
-      x: zone4SourceX[idx],
-      y: 1.5,
-      w: 2.9,
-      h: 0.5,
-      fontSize: 9,
-      bold: true,
-      color: 'FFFFFF',
-      align: 'center',
-      valign: 'middle',
-      fontFace: 'Calibri'
-    });
-  });
-
-  // Interview process
-  slide9.addText('Interview & Assessment Process:', {
-    x: 0.5,
-    y: 2.25,
-    w: 12.33,
-    h: 0.25,
-    fontSize: 11,
-    bold: true,
-    color: '1E293B',
-    fontFace: 'Calibri'
-  });
-
-  const zone4Interviews = ['Phone Screen', 'Deep Technical', 'Scenario/Case Study', 'Expert Panel', 'Executive Round', 'Final Decision'];
-  let zone4IntX = 0.7;
-  zone4Interviews.forEach((int, idx) => {
-    const iw = 1.85;
-    slide9.addShape(pptx.ShapeType.rect, {
-      x: zone4IntX,
-      y: 2.6,
-      w: iw,
-      h: 0.55,
-      fill: { color: 'DBEAFE' },
-      line: { color: '3B82F6', width: 1 }
-    });
-
-    slide9.addText(int, {
-      x: zone4IntX,
-      y: 2.63,
-      w: iw,
-      h: 0.49,
-      fontSize: 8,
-      bold: true,
-      color: '3B82F6',
-      align: 'center',
-      valign: 'middle',
-      fontFace: 'Calibri'
-    });
-
-    if (idx < zone4Interviews.length - 1) {
-      slide9.addShape(pptx.ShapeType.rect, {
-        x: zone4IntX + iw + 0.02,
-        y: 2.83,
-        w: 0.25,
-        h: 0.08,
-        fill: { color: '64748B' },
-        line: { type: 'none' }
-      });
-      zone4IntX += iw + 0.27;
-    }
-  });
-
-  // Ben for zone 4
-  slide9.addText('Ben\'s Role in Zone 4:', {
-    x: 0.5,
-    y: 3.5,
-    w: 12.33,
-    h: 0.25,
-    fontSize: 11,
-    bold: true,
-    color: '1E293B',
-    fontFace: 'Calibri'
-  });
-
-  const zone4Features = [
-    { title: 'Talent Pool Intelligence', desc: 'Maintain 200+ qualified specialists in pipeline even when not hiring' },
-    { title: 'Expert Interview Coordination', desc: 'AI-assisted panel coordination, real-time feedback aggregation' },
-    { title: 'Long-Cycle Nurturing', desc: 'Engage passive candidates over 6-24 month cycles with tailored content' },
-    { title: 'Negotiation Support', desc: 'Offer prediction and acceptance modeling for competitive markets' }
-  ];
-
-  zone4Features.forEach((feat, idx) => {
-    const featY = 3.9 + idx * 0.85;
-    slide9.addShape(pptx.ShapeType.rect, {
-      x: 0.7,
-      y: featY,
-      w: 0.3,
-      h: 0.3,
-      fill: { color: '3B82F6' },
-      line: { type: 'none' }
-    });
-
-    slide9.addText('◆', {
-      x: 0.7,
-      y: featY,
-      w: 0.3,
-      h: 0.3,
-      fontSize: 14,
-      bold: true,
-      color: 'FFFFFF',
-      align: 'center',
-      valign: 'middle',
-      fontFace: 'Calibri'
-    });
-
-    slide9.addText(feat.title, {
-      x: 1.15,
-      y: featY,
-      w: 2.2,
-      h: 0.3,
-      fontSize: 10,
-      bold: true,
-      color: '1E293B',
-      align: 'left',
-      valign: 'middle',
-      fontFace: 'Calibri'
-    });
-
-    slide9.addText(feat.desc, {
-      x: 3.5,
-      y: featY,
-      w: 8.8,
-      h: 0.3,
-      fontSize: 9,
-      color: '64748B',
-      align: 'left',
-      valign: 'middle',
-      fontFace: 'Calibri'
-    });
-  });
-
-  // ========== SLIDE 10: ADAPTIVE MATURITY MODEL ==========
-  const slide10 = pptx.addSlide();
-  slide10.background = { color: 'FFFFFF' };
-
-  // Title
-  slide10.addText('Adaptive Maturity Model: Ambition Level', {
-    x: 0.5,
-    y: 0.3,
-    w: 12.33,
-    h: 0.4,
-    fontSize: 24,
-    bold: true,
-    color: '1E293B',
-    fontFace: 'Calibri'
-  });
-
-  // Maturity levels
-  const levels = [
-    { level: '0', name: 'Stone Age', desc: 'Manual, spreadsheet-based' },
-    { level: '1', name: 'Elimination', desc: 'Basic automation' },
-    { level: '2', name: 'Assimilation', desc: 'AI-assisted screening' },
-    { level: '3', name: 'Automation', desc: 'End-to-end automated workflows' },
-    { level: '4', name: 'Augmentation', desc: 'AI coaches & predictive' },
-    { level: '5', name: 'Domination', desc: 'Autonomous hiring agents' }
-  ];
-
-  const maturityX = 0.5;
-  const maturityY = 1.1;
-  const levelWidth = (12.33 - 0.4) / levels.length;
-
-  levels.forEach((lvl, idx) => {
-    const lvlX = maturityX + idx * levelWidth;
-    const isTarget = idx === 3;
-
-    // Column background
-    slide10.addShape(pptx.ShapeType.rect, {
-      x: lvlX,
-      y: maturityY,
-      w: levelWidth - 0.05,
-      h: 4.0,
-      fill: { color: isTarget ? 'FEF3C7' : 'F8FAFB' },
-      line: { color: isTarget ? brandColor : 'E2E8F0', width: isTarget ? 2 : 1 }
-    });
-
-    // Level number
-    slide10.addText(lvl.level, {
-      x: lvlX,
-      y: maturityY + 0.15,
-      w: levelWidth - 0.05,
-      h: 0.35,
-      fontSize: 18,
-      bold: true,
-      color: isTarget ? brandColor : '64748B',
-      align: 'center',
-      fontFace: 'Calibri'
-    });
-
-    // Level name
-    slide10.addText(lvl.name, {
-      x: lvlX + 0.05,
-      y: maturityY + 0.55,
-      w: levelWidth - 0.15,
-      h: 0.5,
-      fontSize: 11,
-      bold: true,
-      color: '1E293B',
-      align: 'center',
-      valign: 'top',
-      fontFace: 'Calibri'
-    });
-
-    // Description
-    slide10.addText(lvl.desc, {
-      x: lvlX + 0.05,
-      y: maturityY + 1.1,
-      w: levelWidth - 0.15,
-      h: 1.0,
-      fontSize: 9,
-      color: '64748B',
-      align: 'center',
-      valign: 'top',
-      fontFace: 'Calibri'
-    });
-  });
-
-  // Timeline markers
-  slide10.addText('Projected Path:', {
-    x: 0.5,
-    y: 5.25,
-    w: 12.33,
-    h: 0.25,
-    fontSize: 11,
-    bold: true,
-    color: '1E293B',
-    fontFace: 'Calibri'
-  });
-
-  const milestones = [
-    { month: 'Month 0', level: 'Now: Level 0.75', x: maturityX + 0.75 * levelWidth },
-    { month: 'Month 4', level: '2.5 (Moderate AI)', x: maturityX + 2.5 * levelWidth },
-    { month: 'Month 8', level: '3.0 (Full Automation)', x: maturityX + 3.0 * levelWidth },
-    { month: 'Month 18', level: '4.0 (Augmentation)', x: maturityX + 4.0 * levelWidth }
-  ];
-
-  milestones.forEach((mile, idx) => {
-    slide10.addShape(pptx.ShapeType.ellipse, {
-      x: mile.x - 0.15,
-      y: 5.6,
-      w: 0.3,
-      h: 0.3,
-      fill: { color: idx === 0 ? 'FF6B6B' : brandColor },
-      line: { color: '1E293B', width: 1 }
-    });
-
-    slide10.addText(mile.level, {
-      x: mile.x - 0.6,
-      y: 6.0,
-      w: 1.2,
-      h: 0.35,
-      fontSize: 9,
-      bold: true,
-      color: '1E293B',
-      align: 'center',
-      fontFace: 'Calibri'
-    });
+  slide6.addText('Matches the Ben ideal customer profile focus on mixed desk and deskless workforces', {
+    x: 0.5, y: 6.95, w: 12.33, h: 0.35, fontSize: 10, color: '64748B', align: 'center', fontFace: 'Calibri'
   });
 
   // ========== SLIDE 11: EXECUTIVE MAPPING ==========
@@ -2230,7 +1473,7 @@ async function exportToPPTX(account) {
   });
 
   // Footer note
-  slide11.addText('Outreach & engagement approach customized per executive based on priorities and decision-making style', {
+  slide11.addText('Outreach and engagement approach personalised per executive based on priorities and decision making style', {
     x: 0.5,
     y: 6.8,
     w: 12.33,
@@ -2269,7 +1512,7 @@ async function exportToPPTX(account) {
     fontFace: 'Calibri'
   });
 
-  const stepsText = account.nextSteps || 'Schedule initial discovery meeting to align on hiring challenges and Ben solution fit.\nConduct deep-dive assessment of current talent workflows.\nDevelop implementation roadmap and quick-win opportunities.';
+  const stepsText = account.nextSteps || 'Schedule an initial discovery meeting to align on benefits and reward challenges and Ben solution fit.\nRun a deep dive on the current benefits programme and administration workflows.\nDevelop an implementation roadmap and quick win opportunities.';
 
   slide12.addText(stepsText, {
     x: 0.5,
@@ -2297,8 +1540,15 @@ async function exportToPPTX(account) {
 
   const questionsArray = Array.isArray(account.discoveryQuestions)
     ? account.discoveryQuestions
-    : (account.discoveryQuestions ? [account.discoveryQuestions] : []);
-  const questionsText = questionsArray.slice(0, 5).map((q, i) => `${i + 1}. ${q}`).join('\n');
+    : (typeof account.discoveryQuestions === 'string'
+        ? account.discoveryQuestions.split('\n')
+        : (account.discoveryQuestions ? [account.discoveryQuestions] : []));
+  const questionsText = questionsArray
+    .map(function (q) { return (q || '').trim(); })
+    .filter(Boolean)
+    .slice(0, 6)
+    .map(function (q, i) { return /^\s*\d+[\.\)]/.test(q) ? q : (i + 1) + '. ' + q; })
+    .join('\n');
 
   slide12.addText(questionsText, {
     x: 6.8,
@@ -2317,7 +1567,7 @@ async function exportToPPTX(account) {
   const footerItems = [
     { label: 'Primary Sponsor', value: account.primarySponsor || 'To be identified' },
     { label: 'Secondary Contacts', value: account.secondaryContacts || 'To be identified' },
-    { label: 'Timeline', value: account.stage === 'Early' ? '6-12 months' : '3-6 months' }
+    { label: 'Timeline', value: account.stage === 'Early' ? 'six to twelve months' : 'three to six months' }
   ];
 
   footerItems.forEach((item, idx) => {
@@ -2653,9 +1903,9 @@ async function exportToXLSX(account) {
     ["CEO PRIORITIES", account.ceoPriorities || ""],
     ["TECH BETS", account.techBets || ""],
     ["WORKFORCE SCALE", account.workforceScale || ""],
-    ["HIRING SHAPE", account.hiringShape || ""],
-    ["CRITICAL ROLES", account.criticalRoles || ""],
-    ["TALENT PRESSURE", account.talentPressure || ""],
+    ["BENEFITS PROGRAMME", account.hiringShape || ""],
+    ["WORKFORCE SEGMENTS", account.criticalRoles || ""],
+    ["RETENTION & ENGAGEMENT", account.talentPressure || ""],
   ];
   var wsFinancials = XLSX.utils.aoa_to_sheet(finRows);
   wsFinancials["!cols"] = [{ wch: 24 }, { wch: 90 }];
@@ -3036,7 +2286,175 @@ const emptyAccount = (id, name = "") => ({
   lastUpdated: "",
   _archived: false,
 }); // ─── Account data ─────────────────────────────────────────────────────────────
-const pumaAccount = { ...emptyAccount(1, "Example Prospect"), industry: "", priority: "Medium", stage: "Research" };
+const pumaAccount = {
+  ...emptyAccount(1, "Revolut"),
+  industry: "Financial Technology and Banking",
+  accountOwner: "Pascal Schumachers",
+  priority: "High",
+  stage: "Research",
+  atAGlance: "Revolut is a London headquartered financial technology company building a global bank. It serves more than 65 million retail customers across 38 plus markets, with revenue of £4,515.8 million in FY2025 (about six billion dollars). The organisation employs more than 10,000 people worldwide and keeps expanding into new markets and product lines.",
+  revenue: "£4,515.8 million (FY2025, about six billion dollars)",
+  revenueGrowth: "Strong growth year on year",
+  employees: "10,000 plus",
+  employeeGrowth: "",
+  openRoles: "",
+  glassdoorRating: "",
+  hypothesis: "Revolut is building a global bank at speed but paying for benefits its people do not use, in markets it cannot efficiently administer.",
+  keySignals: [
+    "First ever Head of Global Benefits hired in late 2023 to bring order to benefits chaos",
+    "Rapid multi market expansion is outpacing consistent benefits administration",
+    "Strong build it ourselves culture and an in house people platform, Revolut People",
+    "Reward function is focused on quantified spend and utilisation",
+  ],
+  primarySponsor: "Ana Maria Aguilera de Barros, Head of Global Benefits",
+  secondaryContacts: "Jonathan Beaney, Global Head of Talent Acquisition",
+  leadNarrative: "Revolut has scaled to more than 10,000 people across 38 plus markets faster than its benefits operation could keep pace. It now pays for benefits many employees never use, assembled market by market with little central visibility. A new global benefits leader has a mandate to bring order and to prove value quickly.",
+  discoveryAngle: "Open on utilisation and value for money rather than benefits fundamentals, since the sponsor already knows benefits deeply from Google and Amazon.",
+  proofPoint: "Ben supports global employers with mixed desk and deskless workforces through personalised benefits wallets and administration across many markets.",
+  coreBusiness: "Revolut offers a single app for payments, current accounts, cards, currency exchange, savings, investing and business banking, operating as a global financial super app.",
+  industryPosition: "One of the highest valued technology companies in Europe and among the largest consumer fintech platforms by customer numbers.",
+  scaleFootprint: "More than 10,000 employees serving over 65 million customers across 38 plus markets from a London headquarters.",
+  ownershipStructure: "Privately held, backed by venture and growth investors.",
+  recentNews: "Granted a UK banking licence with restrictions and working through the mobilisation stage, while pursuing further licences and a US bank charter to expand lending and deposits.",
+  revenueModel: "Interchange, subscriptions, foreign exchange, wealth and trading, business accounts and growing interest income.",
+  businessSegments: "Retail, business (Revolut Business), wealth and trading, and emerging lending and banking products.",
+  growthContraction: "Broad based growth across customers, markets and revenue, with no material contraction.",
+  profitability: "Record profit of about 2.3 billion dollars reported for 2025.",
+  customerBase: "More than 65 million retail customers plus a growing business customer base.",
+  ceoPriorities: "Nik Storonsky is driving the push to become a fully licensed global bank, expand lending, secure a US charter and grow towards one hundred million customers, all while protecting the never settle, build it ourselves culture.",
+  transformationPrograms: "Transition from an e money and payments app to a licensed bank, in house platform building including Revolut People, and continuous market expansion.",
+  growthInvestments: "Investment in banking licences, new markets such as India, lending products and proprietary technology.",
+  costEfficiency: "Reward and finance leaders are focused on quantified spend and utilisation across a fast growing headcount.",
+  techBets: "Proprietary internal platforms, including Revolut People for talent and performance, reflecting a strong preference to build rather than buy.",
+  regulatoryContext: "Operating under multiple regulators, holds a restricted UK banking licence in mobilisation and is pursuing a US bank charter.",
+  workforceScale: "More than 10,000 employees worldwide across 38 plus markets.",
+  hiringShape: "Global benefits programmes assembled market by market during rapid expansion, with inconsistent design and little visibility of utilisation.",
+  criticalRoles: "Three broad populations, entry and frontline operations and support staff, technical engineering and product staff, and specialist finance, risk, legal and compliance staff.",
+  geoPatterns: "Concentrations in the UK and Europe with fast growth in India and other markets, creating cross border benefits administration complexity.",
+  talentPressure: "A high performance culture with intense focus on retaining scarce engineering and specialist talent, and pressure to prove benefits deliver measurable value.",
+  cioProblems: "",
+  chroProblems: "Standardising and personalising benefits across many markets while proving utilisation and value to a data driven reward function.",
+  businessPain: "Revolut pays for benefits many employees do not use, administered inconsistently across dozens of markets, with little data on utilisation or value for money.",
+  whyNow: "A first ever Head of Global Benefits was hired in late 2023 with a mandate to bring order to benefits chaos, and is judged on outcomes within the first year.",
+  problemHypothesis: "Fragmented and poorly used benefits are costing money and manager time that a single personalised platform could recover.",
+  workflowAssessment: "Benefits are administered through fragmented local processes and spreadsheets, with manual enrolment and limited central reporting.",
+  highestOpportunity: "Consolidate global benefits onto one personalised platform, lift utilisation and give reward leaders live spend and utilisation data.",
+  capabilityMatch: "Ben provides a single global benefits and reward platform with personalised employee wallets and real time utilisation analytics, matching Revolut mixed desk and deskless workforce.",
+  proofPoints: "Ben supports global employers with mixed workforces, personalised benefits wallets and administration across many markets.",
+  personaValueMap: "",
+  challenges: [
+    { severity: "CRITICAL", title: "Low benefits utilisation", businessChallenge: "Employees do not use much of what Revolut pays for, so spend is wasted and value is invisible.", solution: "A personalised benefits wallet that lets each employee choose benefits they will actually use.", proofPoint: "Personalisation lifts engagement with benefits." },
+    { severity: "HIGH", title: "Multi market administration", businessChallenge: "Benefits are administered inconsistently across 38 plus markets with heavy manual effort.", solution: "One platform to administer and localise benefits across every market.", proofPoint: "Central administration reduces local overhead." },
+    { severity: "MEDIUM", title: "No utilisation data", businessChallenge: "Reward leaders cannot quantify spend and utilisation to prove value.", solution: "Live analytics on benefits spend and utilisation.", proofPoint: "Data lets reward teams optimise spend." },
+  ],
+  outcomeStatement: "A single personalised benefits platform that raises utilisation, cuts wasted spend and gives reward leaders live data across every market.",
+  quantifiedImpact: "Reduce wasted benefits spend, raise utilisation and cut manual administration across 38 plus markets. Show the maths and validate assumptions in discovery.",
+  executiveStory: "Revolut is building a global bank at speed but paying for benefits its people do not use, in markets it cannot efficiently administer. Ben consolidates benefits onto one personalised platform, so employees choose what they value, administration is handled market by market, and reward leaders finally see live spend and utilisation.",
+  discoveryQuestions: "How do you measure benefits utilisation across your markets today?\nWhich markets are hardest to administer benefits in, and why?\nHow much of your benefits spend do you believe employees actually use?\nHow does your reward function quantify the value of benefits to the business?",
+  whyNowFraming: "A new global benefits leader is judged within the first year, so proving value quickly matters now rather than later.",
+  nextSteps: "Schedule a discovery session with Ana Maria on utilisation and value for money.\nAgree a quantified baseline of benefits spend and utilisation with the reward team.\nRun a focused workshop on the three workforce populations and their benefits needs.",
+  hyperCellTitle: "Lift utilisation, cut waste",
+  hyperCellNarrative: "Revolut pays for benefits its people do not use. A personalised wallet lets each employee choose benefits they value, raising utilisation and cutting wasted spend across every market.",
+  microGrowthArea: "Fast growing markets such as India where new benefits programmes are being stood up.",
+  geoConflictImpact: "Benefits complexity is concentrated where markets are added fastest and local rules differ most.",
+  fastestGrowingBU: "Revolut Business and new market operations",
+  buGrowthDrivers: "Market expansion and new banking and lending products.",
+  buTalentNeeds: "Engineering, product, finance, risk and compliance talent across many markets.",
+  phenomProductMatch: "Ben aligns benefits and reward to a mixed desk and deskless workforce across many markets.",
+  executives: [
+    {
+      name: "Ana Maria Aguilera de Barros",
+      title: "Head of Global Benefits",
+      roleType: "Primary Sponsor",
+      department: "Reward and Benefits",
+      background: "First ever global benefits leader hired to bring order to the benefits chaos. Ex Google and ex Amazon, so she already knows benefits fundamentals deeply, never educate her on the basics. Judged at her year one mark. Real tenure November 2023 to December 2024, since departed. Note, exercise scenario frozen at late 2023.",
+      priorities: "Bring order to fragmented global benefits, prove value fast, personalise what employees receive.",
+      keyQuote: "",
+      relevance: "The sponsor who owns the benefits problem and the mandate to fix it.",
+      outreachAngles: "Lead on utilisation and value for money, not benefits fundamentals.",
+      linkedinUrl: "",
+      reportsTo: "Fernando Balandrano Gea",
+    },
+    {
+      name: "Fernando Balandrano Gea",
+      title: "Global Head of Rewards",
+      roleType: "Economic Buyer",
+      department: "Reward and Benefits",
+      background: "Likely Ana Maria manager, since his role predates hers by about three months. Compensation and data analytics background through TikTok and Kellogg. Wants quantified answers on spend and utilisation. Real tenure to May 2025, since departed, now at Checkout.com. Note, exercise scenario frozen at late 2023.",
+      priorities: "Quantified spend and utilisation, defensible value for money, disciplined reward strategy.",
+      keyQuote: "",
+      relevance: "Holds the reward budget and the analytical bar the business case must clear.",
+      outreachAngles: "Bring numbers, benchmarks and a clear utilisation story.",
+      linkedinUrl: "",
+      reportsTo: "",
+    },
+    {
+      name: "Georgian Andrei Oprisor",
+      title: "Head of People Product",
+      roleType: "Build Versus Buy Risk",
+      department: "People Product",
+      background: "Leads Revolut People, the in house people platform. Embodies the build it ourselves culture and is the main reason a benefits purchase may face a build versus buy challenge.",
+      priorities: "Extend the in house platform, prove Revolut can build rather than buy.",
+      keyQuote: "",
+      relevance: "The internal alternative to buying Ben, so the build versus buy case must be addressed head on.",
+      outreachAngles: "Position Ben as complementary to Revolut People, focused on benefits depth Revolut will not build.",
+      linkedinUrl: "",
+      reportsTo: "",
+    },
+    {
+      name: "Group Finance leader to identify",
+      title: "Finance sign off (FP and A or Reward Finance)",
+      roleType: "Economic Sign Off",
+      department: "Finance",
+      background: "Placeholder for the finance owner who signs off spend on a global benefits platform. To be identified during discovery.",
+      priorities: "Value for money, predictable cost, clear return on benefits spend.",
+      keyQuote: "",
+      relevance: "Final economic sign off on any benefits investment.",
+      outreachAngles: "Provide a costed business case with clear assumptions.",
+      linkedinUrl: "",
+      reportsTo: "",
+    },
+    {
+      name: "Jonathan Beaney",
+      title: "Global Head of Talent Acquisition",
+      roleType: "Secondary Contact",
+      department: "Talent Acquisition",
+      background: "A talent acquisition leader, not a credible sponsor of a benefits purchase. Useful as a secondary contact and route in only.",
+      priorities: "Hiring at scale, not benefits strategy.",
+      keyQuote: "",
+      relevance: "Secondary contact, keep informed but do not treat as a benefits sponsor.",
+      outreachAngles: "Networking and referral only.",
+      linkedinUrl: "",
+      reportsTo: "",
+    },
+    {
+      name: "Nik Storonsky",
+      title: "Co Founder and CEO",
+      roleType: "Cultural Context",
+      department: "Executive",
+      background: "Sets the never settle, build it ourselves culture that shapes every buying decision. Cultural context rather than a benefits sponsor.",
+      priorities: "Global bank at speed, one hundred million customers, in house everything.",
+      keyQuote: "",
+      relevance: "Cultural context, explains the build versus buy instinct across the company.",
+      outreachAngles: "Reference the culture, do not target directly for benefits.",
+      linkedinUrl: "",
+      reportsTo: "",
+    },
+    {
+      name: "Vlad Yatsenko",
+      title: "Co Founder and CTO",
+      roleType: "Cultural Context",
+      department: "Executive",
+      background: "Co founder and technology leader, reinforces the build it ourselves engineering culture. Cultural context rather than a benefits sponsor.",
+      priorities: "Proprietary platforms, engineering excellence, scale.",
+      keyQuote: "",
+      relevance: "Cultural context, explains the preference to build platforms in house.",
+      outreachAngles: "Reference the culture, do not target directly for benefits.",
+      linkedinUrl: "",
+      reportsTo: "",
+    },
+  ],
+};
 const initAccounts = () => [ pumaAccount ]; // ─── Reusable components ───────────────────────────────────────────────────────
 function paragraphize(text) {
   if (!text || typeof text !== "string") return text || "";
@@ -3883,9 +3301,9 @@ function IntelUploadCard({ account, update, claudeApiKey }) {
         workforceIntelligence: {
           workforceScale: "Workforce & benefits context from Ben data: headcount trends by country/entity, deskless vs desk-based split, benefits-eligible population, engagement and uptake rates, wellbeing indicators",
           hiringShape: "Benefits programme shape from Ben lens: current benefits mix and providers, enrolment and uptake rates, flexibility of allowances, global vs local coverage, admin burden on People teams",
-          criticalRoles: "Critical roles identified via Ben skills intelligence: hardest-to-fill roles, skills gaps, emerging role families, succession planning gaps, skills adjacencies",
+          criticalRoles: "Workforce segments most relevant to benefits via Ben data: deskless vs desk-based cohorts, multi-country populations, high-attrition or hard-to-retain groups, demographically diverse cohorts needing personalised benefits, low-engagement segments",
           geoPatterns: "Geographic benefits patterns from Ben data: countries of operation and entities, multi-country compliance needs, deskless-heavy regions, local benefits expectations",
-          talentPressure: "Talent pressure indicators: employer brand score, candidate experience benchmarks, competitor talent flows, Glassdoor/Indeed sentiment, internal vs external hire ratios"
+          talentPressure: "Retention & engagement pressure indicators: Glassdoor compensation-and-benefits score, benefits-driven attrition, competitor benefits richness, wellbeing indicators, and employer-brand strength that benefits influence"
         },
         problemIdentification: {
           cioProblems: "IT/HRIS problems surfaced by Ben analysis: benefits data spread across payroll, HRIS and point solutions; manual enrolment and eligibility processes; poor integration between payroll and benefits providers; multi-country data compliance gaps",
@@ -3895,7 +3313,7 @@ function IntelUploadCard({ account, update, claudeApiKey }) {
         },
         useCaseMapping: {
           workflowAssessment: "Current state vs Ben-enabled state: manual enrolment vs self-serve, spreadsheets vs real-time spend dashboards, fragmented point solutions vs one platform, generic packages vs personalised Flexible Spending Allowances",
-          highestOpportunity: "Highest-impact Ben use case for this account based on their specific workforce challenges. Map to Ben modules: Intelligent Talent Experience, High-Volume Hiring, Employee Experience, Workforce Intelligence",
+          highestOpportunity: "Highest-impact Ben use case for this account based on their specific benefits & reward challenges. Map to Ben modules: Benefits Management, Benefits Experience, Benefits Insights, Flexible Spending Allowances, Enrolment & Benefits Management",
           capabilityMatch: "Ben capability-to-pain mapping: Benefits Experience -> engagement & uptake; Enrolment & Benefits Management -> removes manual admin; Flexible Spending Allowances -> personalisation; Benefits Insights -> spend visibility & compliance; Total Reward Statement -> perceived value; Rewards & Recognition -> retention & morale; Global Benefits -> multi-country consistency"
         },
         businessChallenges: [
@@ -4149,7 +3567,7 @@ function IntelUploadCard({ account, update, claudeApiKey }) {
           growthInvestments: "Investment areas, M&A, growth initiatives",
           techBets: "Technology investments, digital transformation, AI initiatives",
           workforceScale: "Workforce breakdown, divisions, regions",
-          hiringShape: "Hiring volume, pace, focus areas",
+          hiringShape: "Current benefits programme: benefits mix, providers, enrolment and uptake, flexibility of allowances",
           hypothesis: "Sales hypothesis: why this company needs a benefits platform",
           keySignals: ["signal 1", "signal 2", "signal 3", "signal 4"],
         }) + "\n\nWEB PAGE CONTENT:\n" + truncated;
@@ -4370,7 +3788,7 @@ function IntelUploadCard({ account, update, claudeApiKey }) {
           growthInvestments: "Investment areas, M&A, growth initiatives",
           techBets: "Technology investments, digital transformation, AI initiatives",
           workforceScale: "Workforce breakdown, divisions, regions",
-          hiringShape: "Hiring volume, pace, focus areas",
+          hiringShape: "Current benefits programme: benefits mix, providers, enrolment and uptake, flexibility of allowances",
           hypothesis: "Sales hypothesis: why this company needs a benefits platform based on what the document reveals",
           keySignals: ["signal 1", "signal 2", "signal 3", "signal 4"],
         }) + "\n\nDOCUMENT CONTENT:\n" + truncated;
@@ -4867,7 +4285,7 @@ function ExecutiveBriefSection({ account, update, claudeApiKey }) {
         hyperCellTitle: account.hyperCellTitle || "",
       };
       const prompt = "You are a senior sales intelligence analyst. For \"" + context.companyName + "\", create a comprehensive executive brief by synthesising ALL available intelligence. Use public data, Ben workforce frameworks, and any existing account data. CONTEXT:\n" + JSON.stringify(context) + "\n\nReturn ONLY valid JSON:\n" + JSON.stringify({
-        atAGlance: "2-3 sentence executive overview combining company fundamentals with talent/workforce positioning. Mention key Ben-relevant signals.",
+        atAGlance: "2-3 sentence executive overview combining company fundamentals with benefits & workforce positioning. Mention key Ben-relevant signals.",
         hypothesis: "Sharp sales hypothesis: why this company needs Ben NOW. Reference specific pain + urgency + capability match.",
         keySignals: ["signal 1 — [source]", "signal 2 — [source]", "signal 3 — [source]", "signal 4 — [source]"],
         primarySponsor: "Recommended primary sponsor (name + title if known, or role) with reasoning",
@@ -4948,7 +4366,7 @@ function ExecutiveBriefSection({ account, update, claudeApiKey }) {
       /*#__PURE__*/ React.createElement(MetricCard, {
         value: account.openRoles,
         label: "Open Roles",
-        sub: "Active Hiring",
+        sub: "Headcount Growth",
       }),
       /*#__PURE__*/ React.createElement(MetricCard, { value: account.glassdoorRating, label: "Glassdoor Rating" }),
     ),
@@ -5050,7 +4468,7 @@ function ExecutiveBriefSection({ account, update, claudeApiKey }) {
       /*#__PURE__*/ React.createElement(Input, {
         value: account.primarySponsor,
         onChange: (v) => update("primarySponsor", v),
-        placeholder: "e.g. Kristy Banas (CHRO) \u2014 owns HR transformation, talent retention, employer brand",
+        placeholder: "e.g. Kristy Banas (CHRO) \u2014 owns reward & benefits strategy, retention, employee wellbeing",
       }),
       /*#__PURE__*/ React.createElement(FieldLabel, null, "Secondary Contacts"),
       /*#__PURE__*/ React.createElement(Input, {
@@ -5365,14 +4783,14 @@ function SectionFileUpload({ label, icon, claudeApiKey, prompt, onResult }) {
 
 // ─── HR Tech Stack Section ──────────────────────────────────────────────────
 const HR_TECH_CATEGORIES = [
-  { key: "ats", label: "ATS / Recruiting", icon: "\uD83D\uDD0D", placeholder: "e.g. Workday Recruiting, SAP SuccessFactors, SmartRecruiters, Greenhouse..." },
-  { key: "hcm", label: "HCM / Core HR", icon: "\uD83C\uDFE2", placeholder: "e.g. SAP SuccessFactors, Workday HCM, Oracle HCM, Personio..." },
-  { key: "lms", label: "Learning & Development", icon: "\uD83C\uDF93", placeholder: "e.g. Cornerstone, SAP Litmos, LinkedIn Learning, Degreed..." },
-  { key: "perf", label: "Performance Management", icon: "\uD83C\uDFAF", placeholder: "e.g. SAP SuccessFactors PM, Betterworks, Lattice, 15Five..." },
-  { key: "payroll", label: "Payroll & Benefits", icon: "\uD83D\uDCB0", placeholder: "e.g. SAP Payroll, ADP, Paychex, Deel..." },
-  { key: "wfm", label: "Workforce Management", icon: "\u2699\uFE0F", placeholder: "e.g. Kronos/UKG, SAP Time Management, Quinyx..." },
-  { key: "analytics", label: "People Analytics", icon: "\uD83D\uDCCA", placeholder: "e.g. Visier, One Model, Crunchr, Power BI dashboards..." },
-  { key: "engagement", label: "Employee Experience", icon: "\uD83D\uDCAC", placeholder: "e.g. Qualtrics, Glint, Culture Amp, Peakon..." },
+  { key: "ats", label: "Benefits Administration", icon: "\uD83C\uDF81", placeholder: "e.g. Benify, Darwin (Mercer Marsh), Zest, bswift, Businessolver..." },
+  { key: "hcm", label: "HCM / Core HR (HRIS)", icon: "\uD83C\uDFE2", placeholder: "e.g. Workday HCM, SAP SuccessFactors, Oracle HCM, Personio, HiBob..." },
+  { key: "lms", label: "Wellbeing & EAP", icon: "\uD83E\uDDD8", placeholder: "e.g. Unmind, Spill, Health Assured, Headspace, Lyra, Calm..." },
+  { key: "perf", label: "Reward & Recognition", icon: "\uD83C\uDFC6", placeholder: "e.g. Reward Gateway, Perkbox, Bonusly, Achievers, Each Person..." },
+  { key: "payroll", label: "Payroll", icon: "\uD83D\uDCB0", placeholder: "e.g. ADP, Deel, SAP Payroll, Paychex, Zellis..." },
+  { key: "wfm", label: "Pension & Providers", icon: "\uD83D\uDEE1\uFE0F", placeholder: "e.g. Aviva, Legal & General, Nest, Scottish Widows, Vitality, Bupa..." },
+  { key: "analytics", label: "Benefits / People Analytics", icon: "\uD83D\uDCCA", placeholder: "e.g. Visier, Crunchr, One Model, Power BI dashboards..." },
+  { key: "engagement", label: "Engagement & Comms", icon: "\uD83D\uDCAC", placeholder: "e.g. Culture Amp, Peakon, Qualtrics, Officevibe, Poppulo..." },
 ];
 const HR_CAT_COLORS = {
   ats: { bg: "#DBEAFE", text: "#2563EB" },
@@ -5434,7 +4852,7 @@ function HRTechStackSection({ account, update, claudeApiKey }) {
     "div",
     null,
     /*#__PURE__*/ React.createElement(SectionHeader, {
-      title: "HR Tech Stack",
+      title: "Benefits & HR Systems",
       badge: "Intelligence",
       badgeColor: C.blue,
     }),
@@ -5565,7 +4983,7 @@ function WorkforceSection({ account, update, claudeApiKey }) {
     "div",
     null,
     /*#__PURE__*/ React.createElement(SectionHeader, {
-      title: "Workforce Intelligence",
+      title: "Workforce & Benefits Intelligence",
       badge: "Research",
       badgeColor: C.teal,
     }),
@@ -5896,7 +5314,7 @@ If CONFIRMED still at company, return ONLY valid JSON (no markdown):
 
 {
   "leaders": [
-    {"name": "Full Name", "title": "Exact current title", "department": "Employee Experience", "roleType": "Tech Oversight", "background": "2-3 sentence career background", "priorities": "Their top priorities", "keyQuote": "A real public quote if available, or empty string", "relevance": "Why they matter for an HR/talent technology deal", "outreachAngles": "2 outreach angles", "linkedinUrl": "LinkedIn profile URL if known, or empty string", "reportsTo": "Name of their boss if known"},
+    {"name": "Full Name", "title": "Exact current title", "department": "Employee Experience", "roleType": "Tech Oversight", "background": "2-3 sentence career background", "priorities": "Their top priorities", "keyQuote": "A real public quote if available, or empty string", "relevance": "Why they matter for an employee benefits deal", "outreachAngles": "2 outreach angles", "linkedinUrl": "LinkedIn profile URL if known, or empty string", "reportsTo": "Name of their boss if known"},
     {"name": "Full Name", "title": "Exact current title", "department": "People Operations", "roleType": "Key Influencer", "background": "...", "priorities": "...", "keyQuote": "", "relevance": "...", "outreachAngles": "...", "linkedinUrl": "", "reportsTo": ""},
     {"name": "Full Name", "title": "Exact current title", "department": "Reward & Benefits", "roleType": "Primary Sponsor", "background": "...", "priorities": "...", "keyQuote": "", "relevance": "...", "outreachAngles": "...", "linkedinUrl": "", "reportsTo": ""},
     {"name": "Full Name", "title": "Exact current title", "department": "Wellbeing & Engagement", "roleType": "Key Influencer", "background": "...", "priorities": "...", "keyQuote": "", "relevance": "...", "outreachAngles": "...", "linkedinUrl": "", "reportsTo": ""},
@@ -6320,7 +5738,7 @@ function ProblemIdentificationSection({ account, update, claudeApiKey }) {
         "\uD83C\uDFE2",
         "Business-Level Pain",
         "businessPain",
-        "Revenue impact, competitive disadvantage, cost inefficiency tied to talent/HR problems\u2026",
+        "Revenue impact, competitive disadvantage, cost inefficiency tied to benefits & reward problems\u2026",
       ],
       [
         "\u23F0",
@@ -6408,7 +5826,7 @@ function UseCaseMappingSection({ account, update, claudeApiKey }) {
         "\uD83D\uDD04",
         "Current Workflow Assessment",
         "workflowAssessment",
-        "How are they doing it today? What tools, processes, pain points in their current TA workflow?",
+        "How are they doing it today? What tools, processes, pain points in their current benefits & reward workflow?",
       ],
       [
         "\uD83C\uDFAF",
@@ -6432,7 +5850,7 @@ function UseCaseMappingSection({ account, update, claudeApiKey }) {
         "\uD83D\uDC64",
         "Persona-Specific Value Map",
         "personaValueMap",
-        "CHRO Value: \u2026\nCFO Value: \u2026\nTA Leader Value: \u2026\nHiring Manager Value: \u2026",
+        "CHRO Value: \u2026\nCFO Value: \u2026\nReward & Benefits Leader Value: \u2026\nPeople/HR Ops Value: \u2026",
       ],
     ].map(([icon, title, field, placeholder]) =>
       /*#__PURE__*/ React.createElement(
@@ -6759,7 +6177,7 @@ function HyperCellSection({ account, update, claudeApiKey }) {
     /*#__PURE__*/ React.createElement(Input, {
       value: account.hyperCellTitle,
       onChange: (v) => update("hyperCellTitle", v),
-      placeholder: "e.g. U.S. mid-market insurance producer recruitment, onboarding and cross-entity deployment\u2026",
+      placeholder: "e.g. Consolidate fragmented perk vendors across entities into one flexible allowance, cutting admin and lifting uptake\u2026",
     }),
     /*#__PURE__*/ React.createElement(
       "div",
@@ -6860,7 +6278,7 @@ function GeoPoliSection({ account, update }) {
         "div",
         { style: { fontSize: 12, color: "#92400E", flex: "1 1 250px", minWidth: 250 } },
         /*#__PURE__*/ React.createElement("strong", null, "Ukraine War"),
-        " \u2014 Supply chain disruption, energy price shock, reshoring pressure, defence spending, reconstruction opportunity, Eastern Europe talent shift",
+        " \u2014 Supply chain disruption, energy price shock, reshoring pressure, defence spending, reconstruction opportunity, Eastern Europe workforce shift",
       ),
       /*#__PURE__*/ React.createElement(
         "div",
@@ -6897,7 +6315,7 @@ function GeoPoliSection({ account, update }) {
       field: "geoTalentShift",
       placeholder:
         "How is geopolitics reshaping this company's workforce and the benefits they must offer? (e.g. new-country expansion needing local benefits & compliance, competition for talent forcing richer benefits, relocated or deskless populations, cross-border pay & benefits complexity, Gulf/APAC benefits expectations...)",
-      pills: [{ label: "Talent Dynamics", color: "#7C3AED" }],
+      pills: [{ label: "Retention Dynamics", color: "#7C3AED" }],
     }),
     /*#__PURE__*/ React.createElement(
       "div",
@@ -7250,7 +6668,7 @@ function CampaignSection({ account, update, claudeApiKey }) {
             { id: "phone_voicemail", subject: "Call objective", body: "Phone script / voicemail script (30 seconds). Reference the email. Mention a specific business outcome.", timing: "Day 5", notes: "Best time to call and why" },
             { id: "content_share", subject: "Content share subject line", body: "Message sharing relevant content (case study, article, report). Explain why it is specifically relevant to their situation at " + account.companyName + ".", timing: "Day 8", notes: "What content to share and why" },
             { id: "exec_referral", subject: "Executive referral email subject", body: "Email leveraging an executive connection or internal referral. Reference a conversation or mutual connection. Add credibility.", timing: "Day 12", notes: "Which executive to reference and approach" },
-            { id: "trigger_event", subject: "Trigger-based outreach subject", body: "Message tied to a recent event, earnings call, news, hiring signal, or industry trend affecting " + account.companyName + ". Show you are paying attention to their world.", timing: "Day 16", notes: "Trigger event to monitor for" },
+            { id: "trigger_event", subject: "Trigger-based outreach subject", body: "Message tied to a recent event, earnings call, news, benefits or reward signal, or industry trend affecting " + account.companyName + ". Show you are paying attention to their world.", timing: "Day 16", notes: "Trigger event to monitor for" },
             { id: "final_value", subject: "Final value push subject line", body: "Final compelling message. Quantified value proposition specific to " + account.companyName + ". Include ROI estimate. Create urgency. Strong CTA.", timing: "Day 21", notes: "Key metrics and urgency drivers" },
           ],
           opportunityScore: "1-10 rating of deal likelihood based on intel",
@@ -8518,7 +7936,7 @@ function BUGrowthBenSection({ account, update, claudeApiKey }) {
       var resp = await fetchWithRetry("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json", "x-api-key": claudeApiKey, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
-        body: JSON.stringify({ model: "claude-sonnet-4-6", tools: [{ type: "web_search_20250305", name: "web_search", max_uses: 5 }], max_tokens: 9000, system: "You are a JSON API endpoint. You ONLY output valid JSON objects. Never include any text, explanation, or commentary outside the JSON.", messages: [{ role: "user", content: "Research \"" + account.companyName + "\" (" + (account.industry || "unknown") + "). Today is " + new Date().toISOString().split("T")[0] + ". Use ONLY current-year data and publicly available information.\n\nDEEP ACCOUNT INTELLIGENCE ALREADY GATHERED:\n- At a Glance: " + safeStr(account.atAGlance).substring(0, 400) + "\n- Business Segments: " + safeStr(account.businessSegments).substring(0, 400) + "\n- CEO Priorities: " + safeStr(account.ceoPriorities).substring(0, 300) + "\n- Revenue & Growth: " + safeStr(account.revenueGrowth).substring(0, 300) + "\n- Strategy: " + safeStr(account.strategy).substring(0, 300) + "\n- Key Signals: " + safeStr(account.keySignals).substring(0, 400) + "\n- Challenges: " + safeStr(account.challenges).substring(0, 400) + "\n- Workforce Strategy: " + safeStr(account.workforceStrategy).substring(0, 300) + "\n- Hiring Trends: " + safeStr(account.hiringTrends).substring(0, 300) + "\n- Employees: " + safeStr(account.employees) + "\n- Open Roles: " + safeStr(account.openRoles) + "\n- Problems: " + safeStr(account.problems).substring(0, 300) + "\n- Use Cases: " + safeStr(account.useCases).substring(0, 300) + "\n\nIMPORTANT: Cross-reference ALL the above intelligence. Your BU analysis must be CONSISTENT with the challenges, strategy, and signals already identified. Reference specific facts from this intelligence to ground your analysis.\n\nBen's products: Flexible Spending Allowances (a personalised benefits wallet employees spend their way), Benefits Management & Enrolment (one platform to manage, broke and enrol benefits), Global Benefits Administration (multi-country compliance and localisation), Benefits Marketplace (curated providers and perks), plus payroll and HRIS integrations.\n\nReturn this exact JSON structure:\n{\n  \"fastestGrowingBU\": \"Name the SPECIFIC fastest-growing BU at " + account.companyName + " with growth rate, revenue, and strategic importance. Must be grounded in their actual publicly reported segments and strategy.\",\n  \"buGrowthDrivers\": \"What drives this BU's growth — cite specific recent acquisitions, product launches, or market moves from " + new Date().getFullYear() + ". Connect to the key signals and strategy above.\",\n  \"buTalentNeeds\": \"What talent this BU urgently needs — specific roles, volumes, skill sets. Reference their actual open roles and hiring trends above.\",\n  \"phenomProductMatch\": \"Map 4-5 SPECIFIC Ben products to THIS company's SPECIFIC challenges listed above: '[Product] → [Their specific challenge/use case] → [Expected impact with numbers]'\",\n  \"phenomQuickWins\": \"3 concrete things Ben delivers in FIRST 90 DAYS that directly address the challenges identified above. Include timelines and metrics.\",\n  \"phenomROIStory\": \"12-month ROI narrative using their actual employee count (" + safeStr(account.employees) + ") and open roles (" + safeStr(account.openRoles) + "). Be specific with $ amounts.\",\n  \"wowInsights\": \"5 jaw-drop insights that connect dots across the intelligence above in ways the CHRO wouldn't expect — each 2-3 sentences with specific data from their public filings, earnings calls, or news. Include: (1) recent event most missed, (2) competitive threat to their talent brand, (3) hidden cost they're not tracking, (4) connection between two of their initiatives creating urgency, (5) prediction for next 6-12 months\"\n}" }] }),
+        body: JSON.stringify({ model: "claude-sonnet-4-6", tools: [{ type: "web_search_20250305", name: "web_search", max_uses: 5 }], max_tokens: 9000, system: "You are a JSON API endpoint. You ONLY output valid JSON objects. Never include any text, explanation, or commentary outside the JSON.", messages: [{ role: "user", content: "Research \"" + account.companyName + "\" (" + (account.industry || "unknown") + "). Today is " + new Date().toISOString().split("T")[0] + ". Use ONLY current-year data and publicly available information.\n\nDEEP ACCOUNT INTELLIGENCE ALREADY GATHERED:\n- At a Glance: " + safeStr(account.atAGlance).substring(0, 400) + "\n- Business Segments: " + safeStr(account.businessSegments).substring(0, 400) + "\n- CEO Priorities: " + safeStr(account.ceoPriorities).substring(0, 300) + "\n- Revenue & Growth: " + safeStr(account.revenueGrowth).substring(0, 300) + "\n- Strategy: " + safeStr(account.strategy).substring(0, 300) + "\n- Key Signals: " + safeStr(account.keySignals).substring(0, 400) + "\n- Challenges: " + safeStr(account.challenges).substring(0, 400) + "\n- Workforce Strategy: " + safeStr(account.workforceStrategy).substring(0, 300) + "\n- Headcount / Growth Trends: " + safeStr(account.hiringTrends).substring(0, 300) + "\n- Employees: " + safeStr(account.employees) + "\n- Open Roles: " + safeStr(account.openRoles) + "\n- Problems: " + safeStr(account.problems).substring(0, 300) + "\n- Use Cases: " + safeStr(account.useCases).substring(0, 300) + "\n\nIMPORTANT: Cross-reference ALL the above intelligence. Your BU analysis must be CONSISTENT with the challenges, strategy, and signals already identified. Reference specific facts from this intelligence to ground your analysis.\n\nBen's products: Flexible Spending Allowances (a personalised benefits wallet employees spend their way), Benefits Management & Enrolment (one platform to manage, broke and enrol benefits), Global Benefits Administration (multi-country compliance and localisation), Benefits Marketplace (curated providers and perks), plus payroll and HRIS integrations.\n\nReturn this exact JSON structure:\n{\n  \"fastestGrowingBU\": \"Name the SPECIFIC fastest-growing BU at " + account.companyName + " with growth rate, revenue, and strategic importance. Must be grounded in their actual publicly reported segments and strategy.\",\n  \"buGrowthDrivers\": \"What drives this BU's growth — cite specific recent acquisitions, product launches, or market moves from " + new Date().getFullYear() + ". Connect to the key signals and strategy above.\",\n  \"buTalentNeeds\": \"Benefits, reward and wellbeing pressures on this BU — headcount growth driving enrolment volume, global/multi-country expansion adding benefits complexity, and retention or engagement gaps a benefits programme could address. Reference their actual open roles and headcount growth above.\",\n  \"phenomProductMatch\": \"Map 4-5 SPECIFIC Ben products to THIS company's SPECIFIC challenges listed above: '[Product] → [Their specific challenge/use case] → [Expected impact with numbers]'\",\n  \"phenomQuickWins\": \"3 concrete things Ben delivers in FIRST 90 DAYS that directly address the challenges identified above. Include timelines and metrics.\",\n  \"phenomROIStory\": \"12-month ROI narrative using their actual employee count (" + safeStr(account.employees) + ") and open roles (" + safeStr(account.openRoles) + "). Be specific with $ amounts.\",\n  \"wowInsights\": \"5 jaw-drop insights that connect dots across the intelligence above in ways the CHRO wouldn't expect — each 2-3 sentences with specific data from their public filings, earnings calls, or news. Include: (1) recent event most missed, (2) competitive benefits & reward threat, (3) hidden benefits cost or admin burden they're not tracking, (4) connection between two of their initiatives creating urgency, (5) prediction for next 6-12 months\"\n}" }] }),
       }, 3, function(msg) { setEnrichStatus(msg); });
       var data = await resp.json();
       var rawText = (apiText(data) || "");
@@ -8563,7 +7981,7 @@ function BUGrowthBenSection({ account, update, claudeApiKey }) {
     // Fastest Growing BU
     React.createElement(Card, { icon: "\uD83D\uDCC8", title: "Fastest Growing Business Unit", color: "#7C3AED", field: "fastestGrowingBU", tag: "Growth Engine", placeholder: "Which BU is growing fastest? Include growth rate, revenue, strategic importance...", rows: 4, hint: "Name the specific division/BU, not just 'their tech division'" }),
     React.createElement(Card, { icon: "\u26A1", title: "BU Growth Drivers", color: "#3B82F6", field: "buGrowthDrivers", tag: "Market Intel", placeholder: "What's driving this growth? Acquisitions, product launches, market expansion...", rows: 3 }),
-    React.createElement(Card, { icon: "\uD83D\uDC65", title: "BU Talent Needs", color: "#0D9488", field: "buTalentNeeds", tag: "Hiring Signal", placeholder: "What talent does this BU urgently need? Specific roles, volume, skill sets...", rows: 3 }),
+    React.createElement(Card, { icon: "\uD83D\uDC65", title: "BU Benefits Needs", color: "#0D9488", field: "buTalentNeeds", tag: "Benefits Signal", placeholder: "What benefits & reward pressures does this BU face? Enrolment volume, multi-country coverage gaps, engagement/uptake, retention & wellbeing...", rows: 3 }),
 
     // Ben Product Match
     React.createElement("div", { style: { margin: "20px 0 10px", fontSize: 14, fontWeight: 700, color: "#1E293B" } }, "\uD83C\uDFAF Ben Product \u2192 Company Match"),
@@ -8574,7 +7992,7 @@ function BUGrowthBenSection({ account, update, claudeApiKey }) {
     // Wow Insights
     React.createElement("div", { style: { margin: "20px 0 10px", fontSize: 14, fontWeight: 700, color: "#1E293B" } }, "\uD83E\uDD2F \"How Do You Know That?\" Insights"),
     React.createElement("div", { style: { fontSize: 11, color: "#6B7280", marginBottom: 10, fontStyle: "italic" } }, "5 jaw-drop data points that make the customer think you know their business better than they do. Use in emails, LinkedIn, and opening statements."),
-    React.createElement(Card, { icon: "\uD83D\uDCA1", title: "Wow Insights", color: "#6366F1", field: "wowInsights", tag: "Conversation Opener", placeholder: "1) A specific recent event most people missed\n2) A competitive threat to their talent brand\n3) A hidden cost they're probably not tracking\n4) A connection between two initiatives that creates urgency\n5) A prediction for their next 6-12 months", rows: 10 }),
+    React.createElement(Card, { icon: "\uD83D\uDCA1", title: "Wow Insights", color: "#6366F1", field: "wowInsights", tag: "Conversation Opener", placeholder: "1) A specific recent event most people missed\n2) A hidden benefits cost or admin burden they're probably not tracking\n3) A retention/engagement risk their current benefits don't address\n4) A connection between two initiatives that creates urgency\n5) A prediction for their next 6-12 months", rows: 10 }),
   );
 }
 
@@ -8594,7 +8012,7 @@ function BULeadersSection({ account, update, claudeApiKey }) {
       var resp = await fetchWithRetry("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json", "x-api-key": claudeApiKey, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
-        body: JSON.stringify({ model: "claude-sonnet-4-6", tools: [{ type: "web_search_20250305", name: "web_search", max_uses: 5 }], max_tokens: 9000, system: "You are a JSON API endpoint with a 90% ACCURACY MANDATE. You ONLY output valid JSON objects. Never include any text outside the JSON. For EVERY person you include, you must have verified them against at least 2 public sources (LinkedIn, Xing, company website, press). Never guess or fabricate names.", messages: [{ role: "user", content: "Research current Business Unit leaders at \"" + account.companyName + "\" (" + (account.industry || "unknown") + "). Today is " + new Date().toISOString().split("T")[0] + ".\n\nInclude: division/BU heads, SVPs running business lines, procurement/vendor management leaders, and anyone with P&L responsibility.\n\n90% ACCURACY VERIFICATION PROTOCOL:\n1. For EACH person, verify via: (a) LinkedIn: \"{name}\" site:linkedin.com \"" + account.companyName + "\" (b) Xing: \"{name}\" site:xing.com \"" + account.companyName + "\" (c) Company website: \"" + account.companyName + "\" Vorstand OR management board (d) Departure check: \"{name}\" leaves OR verlässt \"" + account.companyName + "\"\n2. ONLY include if confirmed via AT LEAST 2 sources. State sources in mandate field: 'VERIFIED: [source1] + [source2]'\n3. If only 1 source, prefix name with '⚠️ ' and note 'SINGLE SOURCE'\n4. If ZERO sources confirm → DO NOT INCLUDE. Never guess names.\n5. Search for departures explicitly — anyone who left in 24 months must NOT be included.\n6. Better to return 2-3 verified leaders than 6 guessed names.\n\nReturn this exact JSON structure:\n{\"buLeaders\": [{\"name\": \"Full name (VERIFIED)\", \"title\": \"Current title\", \"bu\": \"Business Unit name\", \"mandate\": \"VERIFIED: [LinkedIn + company website]. Their strategic mandate\", \"talentChallenge\": \"Their hiring challenge\", \"phenomAngle\": \"How to position Ben\", \"linkedinUrl\": \"Actual LinkedIn URL or empty string\"}]}" }] }),
+        body: JSON.stringify({ model: "claude-sonnet-4-6", tools: [{ type: "web_search_20250305", name: "web_search", max_uses: 5 }], max_tokens: 9000, system: "You are a JSON API endpoint with a 90% ACCURACY MANDATE. You ONLY output valid JSON objects. Never include any text outside the JSON. For EVERY person you include, you must have verified them against at least 2 public sources (LinkedIn, Xing, company website, press). Never guess or fabricate names.", messages: [{ role: "user", content: "Research current Business Unit leaders at \"" + account.companyName + "\" (" + (account.industry || "unknown") + "). Today is " + new Date().toISOString().split("T")[0] + ".\n\nInclude: division/BU heads, SVPs running business lines, procurement/vendor management leaders, and anyone with P&L responsibility.\n\n90% ACCURACY VERIFICATION PROTOCOL:\n1. For EACH person, verify via: (a) LinkedIn: \"{name}\" site:linkedin.com \"" + account.companyName + "\" (b) Xing: \"{name}\" site:xing.com \"" + account.companyName + "\" (c) Company website: \"" + account.companyName + "\" Vorstand OR management board (d) Departure check: \"{name}\" leaves OR verlässt \"" + account.companyName + "\"\n2. ONLY include if confirmed via AT LEAST 2 sources. State sources in mandate field: 'VERIFIED: [source1] + [source2]'\n3. If only 1 source, prefix name with '⚠️ ' and note 'SINGLE SOURCE'\n4. If ZERO sources confirm → DO NOT INCLUDE. Never guess names.\n5. Search for departures explicitly — anyone who left in 24 months must NOT be included.\n6. Better to return 2-3 verified leaders than 6 guessed names.\n\nReturn this exact JSON structure:\n{\"buLeaders\": [{\"name\": \"Full name (VERIFIED)\", \"title\": \"Current title\", \"bu\": \"Business Unit name\", \"mandate\": \"VERIFIED: [LinkedIn + company website]. Their strategic mandate\", \"talentChallenge\": \"Their benefits & reward challenge\", \"phenomAngle\": \"How to position Ben\", \"linkedinUrl\": \"Actual LinkedIn URL or empty string\"}]}" }] }),
       }, 3, function(msg) { setEnrichStatus(msg); });
       var data = await resp.json();
       var rawText = (apiText(data) || "");
@@ -8666,7 +8084,7 @@ function BULeadersSection({ account, update, claudeApiKey }) {
       ),
       React.createElement("textarea", { value: newLeader.mandate, onChange: function(e) { setNewLeader(function(prev) { return { ...prev, mandate: e.target.value }; }); }, placeholder: "Strategic mandate and KPIs...", rows: 2,
         style: { width: "100%", padding: "8px 10px", border: "1px solid " + C.border, borderRadius: 6, fontSize: 12, fontFamily: "inherit", marginTop: 8, boxSizing: "border-box", resize: "vertical" } }),
-      React.createElement("textarea", { value: newLeader.talentChallenge, onChange: function(e) { setNewLeader(function(prev) { return { ...prev, talentChallenge: e.target.value }; }); }, placeholder: "Their talent/hiring challenge...", rows: 2,
+      React.createElement("textarea", { value: newLeader.talentChallenge, onChange: function(e) { setNewLeader(function(prev) { return { ...prev, talentChallenge: e.target.value }; }); }, placeholder: "Their reward & benefits challenge...", rows: 2,
         style: { width: "100%", padding: "8px 10px", border: "1px solid " + C.border, borderRadius: 6, fontSize: 12, fontFamily: "inherit", marginTop: 8, boxSizing: "border-box", resize: "vertical" } }),
       React.createElement("textarea", { value: newLeader.phenomAngle, onChange: function(e) { setNewLeader(function(prev) { return { ...prev, phenomAngle: e.target.value }; }); }, placeholder: "How to position Ben to this person...", rows: 2,
         style: { width: "100%", padding: "8px 10px", border: "1px solid " + C.border, borderRadius: 6, fontSize: 12, fontFamily: "inherit", marginTop: 8, boxSizing: "border-box", resize: "vertical" } }),
@@ -8703,7 +8121,7 @@ function BULeadersSection({ account, update, claudeApiKey }) {
           React.createElement("div", { style: { display: "grid", gap: 8, marginTop: 10 } },
             [
               { label: "\uD83C\uDFAF Mandate & KPIs", field: "mandate", ph: "Strategic mandate..." },
-              { label: "\uD83D\uDC65 Talent Challenge", field: "talentChallenge", ph: "Their hiring/talent challenge..." },
+              { label: "\uD83D\uDC65 Reward & Benefits Challenge", field: "talentChallenge", ph: "Their reward & benefits challenge..." },
               { label: "\uD83E\uDDE9 Ben Angle", field: "phenomAngle", ph: "How to position Ben to this person..." },
             ].map(function(f) {
               return React.createElement("div", { key: f.field },
@@ -9340,7 +8758,7 @@ const SUPER_SECTIONS = [
   ]},
   { id: "talent", label: "Workforce & Benefits", icon: "\uD83D\uDC65", children: [
     { id: "workforce", label: "Workforce Intel" },
-    { id: "hrtech", label: "HR Tech Stack" },
+    { id: "hrtech", label: "Benefits & HR Systems" },
     { id: "executives", label: "People" },
     { id: "geopolitics", label: "Geo-Politics" },
   ]},
@@ -9444,7 +8862,7 @@ function ProspectDashboard() {
   // --- Firebase Cloud Save ---
   const saveToCloud = useCallback(async (accs) => {
     // Always save to localStorage as instant backup
-    try { localStorage.setItem("thanksben_accounts", JSON.stringify(accs)); } catch(e) {}
+    try { localStorage.setItem("thanksben_accounts_v2", JSON.stringify(accs)); } catch(e) {}
     if (!db || !auth || !auth.currentUser) { setSyncStatus("local"); return; }
     const uid = auth.currentUser.uid;
     try {
@@ -9462,7 +8880,7 @@ function ProspectDashboard() {
         const chunk = accs.slice(i, i + 10);
         const batch = db.batch();
         for (const acc of chunk) {
-          const accRef = db.collection("users").doc(uid).collection("thanksben_accounts").doc(String(acc.id));
+          const accRef = db.collection("users").doc(uid).collection("thanksben_accounts_v2").doc(String(acc.id));
           batch.set(accRef, JSON.parse(JSON.stringify(acc)));
         }
         await batch.commit();
@@ -9487,7 +8905,7 @@ function ProspectDashboard() {
       if (!index.ids || index.ids.length === 0) return null;
       const accs = [];
       for (const meta of index.ids) {
-        const accSnap = await db.collection("users").doc(uid).collection("thanksben_accounts").doc(String(meta.id)).get();
+        const accSnap = await db.collection("users").doc(uid).collection("thanksben_accounts_v2").doc(String(meta.id)).get();
         if (accSnap.exists) {
           accs.push(accSnap.data());
         }
@@ -9526,7 +8944,7 @@ function ProspectDashboard() {
       // Fallback to localStorage
       if (!loadedAccs || loadedAccs.length === 0) {
         try {
-          const stored = localStorage.getItem("thanksben_accounts");
+          const stored = localStorage.getItem("thanksben_accounts_v2");
           if (stored) loadedAccs = JSON.parse(stored);
         } catch (e) {}
       }
@@ -9585,12 +9003,12 @@ function ProspectDashboard() {
           try {
             const accs = [];
             for (const meta of (data.ids || [])) {
-              const accSnap = await db.collection("users").doc(uid).collection("thanksben_accounts").doc(String(meta.id)).get();
+              const accSnap = await db.collection("users").doc(uid).collection("thanksben_accounts_v2").doc(String(meta.id)).get();
               if (accSnap.exists) accs.push(accSnap.data());
             }
             if (accs.length > 0) {
               setAccounts(accs);
-              try { localStorage.setItem("thanksben_accounts", JSON.stringify(accs)); } catch(e) {}
+              try { localStorage.setItem("thanksben_accounts_v2", JSON.stringify(accs)); } catch(e) {}
               setSyncStatus("synced");
             }
           } catch(e) {
@@ -9689,7 +9107,7 @@ function ProspectDashboard() {
   "revenue": "Most recent annual revenue with currency — MUST include the fiscal year (e.g. FY${currentYear - 1}). Do NOT use data older than ${currentYear - 2}",
   "revenueGrowth": "YoY growth % and trend",
   "employees": "Current headcount",
-  "openRoles": "Estimated open roles and hiring focus areas",
+  "openRoles": "Estimated open roles and headcount growth areas (a signal of rising benefits enrolment volume)",
   "glassdoorRating": "Glassdoor rating / 5.0 if known",
   "coreBusiness": "Core business description, products/services, market position",
   "industryPosition": "Key competitors and market share",
@@ -9724,19 +9142,19 @@ function ProspectDashboard() {
   "businessPain": "Quantified business pain: rising benefits spend with low utilisation, benefits admin hours, attrition cost where reward is a driver, lost productivity from low engagement",
   "whyNow": "Why is now the right time to engage: trigger events, leadership changes, strategic shifts",
   "problemHypothesis": "Problem hypothesis connecting company challenges to benefits platform solution",
-  "workflowAssessment": "Current HR tech stack (ATS, HCM, LMS) and gaps",
+  "workflowAssessment": "Current benefits & HR systems (HRIS, payroll, benefits administration, pension & providers) and gaps",
   "hrTechStack": "CRITICAL: ONLY include tools that are PUBLICLY CONFIRMED (press releases, job postings mentioning specific tools, vendor case studies, annual reports). Return EMPTY ARRAY [] if not confirmed. DO NOT GUESS. Format: [{category: ats/hcm/lms/perf/payroll/wfm/analytics/engagement, name: Exact vendor name, notes: Source of confirmation}]",
   "highestOpportunity": "Highest-impact wedge: flexible spending allowances, benefits consolidation, global benefits admin, or enrolment automation",
   "capabilityMatch": "Which platform capabilities map to which business needs",
   "proofPoints": "Relevant proof points or similar company case studies",
-  "personaValueMap": "Value proposition per persona: CHRO, CIO, CFO, hiring managers",
+  "personaValueMap": "Value proposition per persona: CHRO, CIO, CFO, reward & benefits leaders",
   "outcomeStatement": "Measurable outcome statement: what we can deliver for this company",
   "quantifiedImpact": "Quantified ROI: benefits spend optimised, admin hours saved, engagement/utilisation uplift, retention improvement",
   "executiveStory": "Narrative pitch story for the CEO (3-4 sentences)",
   "discoveryQuestions": "4 discovery questions to ask in a first meeting",
   "whyNowFraming": "Why-now framing for outreach timing",
   "nextSteps": "Recommended next steps: 3-4 actions with timeline",
-  "hyperCellTitle": "Provocative one-line headline about their talent challenge",
+  "hyperCellTitle": "Provocative one-line headline about their benefits & reward challenge",
   "hyperCellNarrative": "2-3 sentence hyper-cell narrative with quantified opportunity",
   "geoConflictImpact": "How geopolitical factors (conflicts, trade, regulation) affect this company",
   "microGrowthArea": "Specific emerging growth area creating new benefits and reward needs (new-country entry, hiring surge, retention pressure)",
@@ -9767,7 +9185,7 @@ INCLUSION RULES:
 - Return 3-5 VERIFIED executives. 3 verified >> 8 guessed.
 
 {
-  "keySignals": ["signal 1 about hiring/growth", "signal 2 about leadership", "signal 3 about tech/AI", "signal 4 about financials", "signal 5 about workforce", "signal 6 about transformation", "signal 7 about market position", "signal 8 about talent pressure"],
+  "keySignals": ["signal 1 about headcount growth", "signal 2 about leadership", "signal 3 about tech/AI", "signal 4 about financials", "signal 5 about workforce", "signal 6 about transformation", "signal 7 about market position", "signal 8 about retention & engagement"],
   "primarySponsor": "Name and title of the most relevant HR/People executive (VERIFIED current employee only)",
   "secondaryContacts": "Name and title of CIO/CTO or other relevant executive (VERIFIED current employee only)",
   "leadNarrative": "One-sentence lead narrative for sales outreach",
@@ -9814,7 +9232,7 @@ DEEP ACCOUNT INTELLIGENCE ALREADY GATHERED:
 - Key Signals: ${c4ctx.keySignals}
 - Challenges: ${c4ctx.challenges}
 - Workforce Strategy: ${c4ctx.workforce}
-- Hiring Trends: ${c4ctx.hiring}
+- Headcount / Growth Trends: ${c4ctx.hiring}
 - Employees: ${acc.employees || "N/A"}, Open Roles: ${acc.openRoles || "N/A"}
 - Known Problems: ${c4ctx.problems}
 - Use Cases: ${c4ctx.useCases}
@@ -9831,12 +9249,12 @@ Return this exact JSON structure:
   "phenomProductMatch": "Map 4-5 Ben products to their SPECIFIC challenges listed above: '[Product] → [Their challenge] → [Expected impact with numbers]'",
   "phenomQuickWins": "3 things Ben delivers in FIRST 90 DAYS that directly address the challenges identified above.",
   "phenomROIStory": "12-month ROI using actual numbers: ${acc.employees || "N"} employees, ${acc.openRoles || "N"} open roles. Specific $ amounts.",
-  "wowInsights": "5 insights connecting dots across the intelligence above that the CHRO wouldn't expect: (1) recent event most missed, (2) competitive talent threat, (3) hidden cost, (4) urgency connection between initiatives, (5) 6-12 month prediction. Each 2-3 sentences with data.",
+  "wowInsights": "5 insights connecting dots across the intelligence above that the CHRO wouldn't expect: (1) recent event most missed, (2) competitive benefits & reward threat, (3) hidden benefits cost or admin burden, (4) urgency connection between initiatives, (5) 6-12 month prediction. Each 2-3 sentences with data.",
   "buLeaders": [
-    {"name": "Full name", "title": "Exact current title", "bu": "Business Unit name", "mandate": "Strategic mandate", "talentChallenge": "Hiring challenge", "phenomAngle": "How to position Ben", "linkedinUrl": ""},
+    {"name": "Full name", "title": "Exact current title", "bu": "Business Unit name", "mandate": "Strategic mandate", "talentChallenge": "Benefits & reward challenge", "phenomAngle": "How to position Ben", "linkedinUrl": ""},
     {"name": "Second BU leader", "title": "Title", "bu": "BU", "mandate": "Mandate", "talentChallenge": "Challenge", "phenomAngle": "Angle", "linkedinUrl": ""},
     {"name": "Third leader", "title": "Title", "bu": "BU", "mandate": "Mandate", "talentChallenge": "Challenge", "phenomAngle": "Angle", "linkedinUrl": ""},
-    {"name": "Procurement/Vendor leader", "title": "Title", "bu": "Procurement", "mandate": "Mandate", "talentChallenge": "How they evaluate HR tech", "phenomAngle": "Angle", "linkedinUrl": ""}
+    {"name": "Procurement/Vendor leader", "title": "Title", "bu": "Procurement", "mandate": "Mandate", "talentChallenge": "How they evaluate benefits & HR tech", "phenomAngle": "Angle", "linkedinUrl": ""}
   ]
 }`;
         const d4 = await callClaudeAPI(key, p4, 4000);
