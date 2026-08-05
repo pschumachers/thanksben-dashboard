@@ -2366,7 +2366,7 @@ const pumaAccount = {
       name: "Ana Maria Aguilera de Barros",
       title: "Head of Global Benefits",
       roleType: "Primary Sponsor",
-      department: "Reward and Benefits",
+      department: "Reward & Benefits",
       background: "First ever global benefits leader hired to bring order to the benefits chaos. Ex Google and ex Amazon, so she already knows benefits fundamentals deeply, never educate her on the basics. Judged at her year one mark. Real tenure November 2023 to December 2024, since departed. Note, exercise scenario frozen at late 2023.",
       priorities: "Bring order to fragmented global benefits, prove value fast, personalise what employees receive.",
       keyQuote: "",
@@ -2379,7 +2379,7 @@ const pumaAccount = {
       name: "Fernando Balandrano Gea",
       title: "Global Head of Rewards",
       roleType: "Economic Buyer",
-      department: "Reward and Benefits",
+      department: "Reward & Benefits",
       background: "Likely Ana Maria manager, since his role predates hers by about three months. Compensation and data analytics background through TikTok and Kellogg. Wants quantified answers on spend and utilisation. Real tenure to May 2025, since departed, now at Checkout.com. Note, exercise scenario frozen at late 2023.",
       priorities: "Quantified spend and utilisation, defensible value for money, disciplined reward strategy.",
       keyQuote: "",
@@ -2392,7 +2392,7 @@ const pumaAccount = {
       name: "Georgian Andrei Oprisor",
       title: "Head of People Product",
       roleType: "Build Versus Buy Risk",
-      department: "People Product",
+      department: "IT / HRIS",
       background: "Leads Revolut People, the in house people platform. Embodies the build it ourselves culture and is the main reason a benefits purchase may face a build versus buy challenge.",
       priorities: "Extend the in house platform, prove Revolut can build rather than buy.",
       keyQuote: "",
@@ -2418,7 +2418,7 @@ const pumaAccount = {
       name: "Jonathan Beaney",
       title: "Global Head of Talent Acquisition",
       roleType: "Secondary Contact",
-      department: "Talent Acquisition",
+      department: "People / HR Leadership",
       background: "A talent acquisition leader, not a credible sponsor of a benefits purchase. Useful as a secondary contact and route in only.",
       priorities: "Hiring at scale, not benefits strategy.",
       keyQuote: "",
@@ -2431,7 +2431,7 @@ const pumaAccount = {
       name: "Nik Storonsky",
       title: "Co Founder and CEO",
       roleType: "Cultural Context",
-      department: "Executive",
+      department: "Other",
       background: "Sets the never settle, build it ourselves culture that shapes every buying decision. Cultural context rather than a benefits sponsor.",
       priorities: "Global bank at speed, one hundred million customers, in house everything.",
       keyQuote: "",
@@ -2444,7 +2444,7 @@ const pumaAccount = {
       name: "Vlad Yatsenko",
       title: "Co Founder and CTO",
       roleType: "Cultural Context",
-      department: "Executive",
+      department: "Other",
       background: "Co founder and technology leader, reinforces the build it ourselves engineering culture. Cultural context rather than a benefits sponsor.",
       priorities: "Proprietary platforms, engineering excellence, scale.",
       keyQuote: "",
@@ -9190,17 +9190,26 @@ INCLUSION RULES:
 - For linkedinUrl: actual URL or empty string. Never guess URLs.
 - Return 3-5 VERIFIED executives. 3 verified >> 8 guessed.
 
+WHO TO FIND — this is a BENEFITS and REWARD sale, so prioritise in THIS order:
+1. Head of Reward / Total Rewards / Compensation & Benefits / Head of Benefits (the PRIMARY SPONSOR; department "Reward & Benefits").
+2. CHRO / Chief People Officer / People Director (Key Influencer; department "People / HR Leadership").
+3. Head of People Operations / Benefits Operations / HR Operations (department "People Operations").
+4. CFO / Finance Director / VP Finance who signs off reward spend (Economic Buyer; department "Finance").
+5. Head of HRIS / People Systems / People Technology (department "IT / HRIS").
+Do NOT lead with recruiters or Talent Acquisition leaders; they are not benefits buyers (include at most as a secondary contact).
+For EVERY executive set "department" to exactly one of: Reward & Benefits, People / HR Leadership, People Operations, Wellbeing & Engagement, Employee Experience, IT / HRIS, Finance, Procurement, Other. Use "Reward & Benefits" for any reward, benefits or compensation role.
+
 {
   "keySignals": ["signal 1 about headcount growth", "signal 2 about leadership", "signal 3 about tech/AI", "signal 4 about financials", "signal 5 about workforce", "signal 6 about transformation", "signal 7 about market position", "signal 8 about retention & engagement"],
-  "primarySponsor": "Name and title of the most relevant HR/People executive (VERIFIED current employee only)",
-  "secondaryContacts": "Name and title of CIO/CTO or other relevant executive (VERIFIED current employee only)",
+  "primarySponsor": "Name and title of the Reward, Benefits or Total Rewards leader who would own a benefits purchase (VERIFIED current employee only); if none exists, the most senior People or HR leader",
+  "secondaryContacts": "Name and title of the Finance/CFO or People Operations leader who would co-sign a benefits decision (VERIFIED current employee only)",
   "leadNarrative": "One-sentence lead narrative for sales outreach",
   "discoveryAngle": "Key discovery angle: what to explore in first meeting",
   "proofPoint": "Most relevant customer case study or proof point",
   "executives": [
-    {"name": "Executive 1 full name (VERIFIED on LinkedIn/Xing)", "title": "Their exact current title", "roleType": "Primary Sponsor", "department": "People / HR Leadership", "background": "2-3 sentence career background + verification source", "priorities": "Their top priorities", "keyQuote": "A REAL public quote with source — or empty string if none found", "relevance": "Why they matter for this deal", "outreachAngles": "2 outreach angles to engage them", "linkedinUrl": "LinkedIn profile URL (https://linkedin.com/in/...) or empty string", "reportsTo": "Name of their direct manager"},
-    {"name": "Executive 2 full name (VERIFIED)", "title": "Their exact current title", "roleType": "Key Influencer", "department": "Reward & Benefits", "background": "2-3 sentence background + verification", "priorities": "Their top priorities", "keyQuote": "Real quote or empty string", "relevance": "Why they matter", "outreachAngles": "2 outreach angles", "linkedinUrl": "", "reportsTo": ""},
-    {"name": "Executive 3 full name (VERIFIED)", "title": "Their exact current title", "roleType": "Budget Authority", "department": "IT / HRIS", "background": "2-3 sentence background + verification", "priorities": "Their top priorities", "keyQuote": "Real quote or empty string", "relevance": "Why they matter", "outreachAngles": "2 outreach angles", "linkedinUrl": "", "reportsTo": ""}
+    {"name": "Executive 1 full name (VERIFIED on LinkedIn/Xing)", "title": "Their exact current title", "roleType": "Primary Sponsor", "department": "Reward & Benefits", "background": "2-3 sentence career background + verification source", "priorities": "Their top priorities", "keyQuote": "A REAL public quote with source — or empty string if none found", "relevance": "Why they matter for this deal", "outreachAngles": "2 outreach angles to engage them", "linkedinUrl": "LinkedIn profile URL (https://linkedin.com/in/...) or empty string", "reportsTo": "Name of their direct manager"},
+    {"name": "Executive 2 full name (VERIFIED)", "title": "Their exact current title", "roleType": "Key Influencer", "department": "People / HR Leadership", "background": "2-3 sentence background + verification", "priorities": "Their top priorities", "keyQuote": "Real quote or empty string", "relevance": "Why they matter", "outreachAngles": "2 outreach angles", "linkedinUrl": "", "reportsTo": ""},
+    {"name": "Executive 3 full name (VERIFIED)", "title": "Their exact current title", "roleType": "Budget Authority", "department": "Finance", "background": "2-3 sentence background + verification", "priorities": "Their top priorities", "keyQuote": "Real quote or empty string", "relevance": "Why they matter", "outreachAngles": "2 outreach angles", "linkedinUrl": "", "reportsTo": ""}
   ],
   "challenges": [
     {"severity": "CRITICAL", "title": "Challenge title", "businessChallenge": "Description", "solution": "How benefits platform solves it", "proofPoint": "Relevant proof point"},
